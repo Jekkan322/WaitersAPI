@@ -3,6 +3,7 @@ package com.server.demo.entities;
 
 import com.server.demo.repositories.AchievementsRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
+import com.server.demo.repositories.WaitersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -21,8 +22,8 @@ public abstract class AchievementsEntity{
     private String descriptionAchievement;
     private int requiredInitialAmount;
     private int increasingAmountWithNewLevel;
-    private int initialReward;
-    private int increasingRewardWithNewLevel;
+    private Long initialReward;
+    private Long increasingRewardWithNewLevel;
 
     @OneToMany(mappedBy = "achievements")
     Set<WaitersAchievementsEntity> waitersAchievements;
@@ -30,7 +31,7 @@ public abstract class AchievementsEntity{
     public AchievementsEntity(){
 
     }
-    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository);
+    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository, WaitersRepository waitersRepository);
 
 
 
@@ -50,19 +51,19 @@ public abstract class AchievementsEntity{
         this.increasingAmountWithNewLevel = increasingAmountWithNewLevel;
     }
 
-    public int getInitialReward() {
+    public Long getInitialReward() {
         return initialReward;
     }
 
-    public void setInitialReward(int initialReward) {
+    public void setInitialReward(Long initialReward) {
         this.initialReward = initialReward;
     }
 
-    public int getIncreasingRewardWithNewLevel() {
+    public Long getIncreasingRewardWithNewLevel() {
         return increasingRewardWithNewLevel;
     }
 
-    public void setIncreasingRewardWithNewLevel(int increasingRewardWithNewLevel) {
+    public void setIncreasingRewardWithNewLevel(Long increasingRewardWithNewLevel) {
         this.increasingRewardWithNewLevel = increasingRewardWithNewLevel;
     }
 

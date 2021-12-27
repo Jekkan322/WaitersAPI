@@ -2,6 +2,7 @@ package com.server.demo.service;
 
 import com.server.demo.entities.AchievementsEntity;
 import com.server.demo.entities.OrdersEntity;
+import com.server.demo.entities.WaitersEntity;
 import com.server.demo.repositories.AchievementsRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -21,7 +22,7 @@ public class AchievementsService {
 
     public void checkAllAchievements(OrdersEntity ordersEntity){
         for(AchievementsEntity achievementsEntity:achievementsRepository.findAll()) {
-            achievementsEntity.processOrder(ordersEntity,waitersAchievementsRepository);
+            achievementsEntity.processOrder(ordersEntity,waitersAchievementsRepository,waitersRepository);
         }
 
     }

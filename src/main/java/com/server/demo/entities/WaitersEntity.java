@@ -24,6 +24,9 @@ public class WaitersEntity {
     @OneToMany(mappedBy = "waiters")
     Set<WaitersAchievementsEntity > waitersAchievements;
 
+    @OneToMany(mappedBy = "waiters")
+    Set<WaitersMissionEntity > waitersMission;
+
 
     public void processOrder(OrdersEntity orderEntity){
 

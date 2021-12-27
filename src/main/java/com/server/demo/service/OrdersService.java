@@ -34,12 +34,15 @@ public class OrdersService {
     @Autowired
     DishOrderRepository dishOrderRepository;
 
+    @Autowired
+    MissionService missionService;
+
     
-    public Orders ordersCreate(OrdersForCreate ordersEntity){
-        if(ordersEntity.getOrderTime()==null){
-            ordersEntity.setOrderTime(Date.from(ZonedDateTime.now().toInstant()));
+    public Orders ordersCreate(OrdersForCreate ordersForCreate){
+        if(ordersForCreate.getOrderTime()==null){
+            ordersForCreate.setOrderTime(Date.from(ZonedDateTime.now().toInstant()));
         }
-        return Orders.toModel((OrdersEntity.toEntity(ordersEntity,waitersRepository,menuRepository,dishOrderRepository,ordersRepository)));
+        return Orders.toModel((OrdersEntity.toEntity(ordersForCreate,waitersRepository,menuRepository,dishOrderRepository,ordersRepository)));
     }
 
     public Long ordersDelete(Long id) throws OrderNotFoundException {
@@ -64,6 +67,7 @@ public class OrdersService {
         orders.setWaitersEntity(ordersEntity.getWaitersEntity());
         if(orders.isOrderStatus()){
             achievementsService.checkAllAchievements(orders);
+
         }
         return Orders.toModel(ordersRepository.save(orders));
     }
@@ -81,6 +85,7 @@ public class OrdersService {
         }
         if(ordersEntity.isOrderStatus()){
             achievementsService.checkAllAchievements(ordersEntity);
+            missionService.checkAllMissions(ordersEntity);
         }
         return Orders.toModel(ordersRepository.save(ordersEntity));
 
