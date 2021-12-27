@@ -14,7 +14,6 @@ import java.util.Optional;
 public interface WaitersAchievementsRepository extends CrudRepository<WaitersAchievementsEntity,Long> {
 
     Optional<WaitersAchievementsEntity> findByWaitersAndAchievements(WaitersEntity waiters, AchievementsEntity achievements);
-    Optional<WaitersEntity> findByWaiters(WaitersEntity waiters);
 
 
 }

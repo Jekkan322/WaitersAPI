@@ -26,7 +26,7 @@ public class ProceedsAchievementsEntity extends  AchievementsEntity{
         }
         waitersAchievementsEntity.setProgress(waitersAchievementsEntity.getProgress()+ordersEntity.getOrderPrice());
         WaitersEntity waitersEntity;
-        Optional<WaitersEntity> optionalWaitersEntity=waitersAchievementsRepository.findByWaiters(ordersEntity.getWaitersEntity());
+        Optional<WaitersEntity> optionalWaitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId());
         if(optionalWaitersEntity.isPresent()){
             waitersEntity=optionalWaitersEntity.get();
         }

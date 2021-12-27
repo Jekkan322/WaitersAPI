@@ -10,5 +10,4 @@ import java.util.Optional;
 public interface WaitersMissionRepository extends CrudRepository<WaitersMissionEntity,Long> {
 
     Optional<WaitersMissionEntity> findByWaitersAndMission(WaitersEntity waiters, MissionEntity missionEntity);
-    Optional<WaitersEntity> findByWaiters(WaitersEntity waiters);
 }

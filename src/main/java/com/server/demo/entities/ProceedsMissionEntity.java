@@ -29,7 +29,7 @@ public class ProceedsMissionEntity extends MissionEntity{
             waitersMissionEntity.setProgress(waitersMissionEntity.getProgress()+ordersEntity.getOrderPrice());
         }
         WaitersEntity waitersEntity;
-        Optional<WaitersEntity> optionalWaitersEntity=waitersMissionRepository.findByWaiters(ordersEntity.getWaitersEntity());
+        Optional<WaitersEntity> optionalWaitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId());
         if(optionalWaitersEntity.isPresent()){
             waitersEntity=optionalWaitersEntity.get();
         }

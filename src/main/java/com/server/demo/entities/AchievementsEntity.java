@@ -31,7 +31,7 @@ public abstract class AchievementsEntity{
     public AchievementsEntity(){
 
     }
-    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository, WaitersRepository waitersRepository);
+    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository,WaitersRepository waitersRepository);
 
 
 
