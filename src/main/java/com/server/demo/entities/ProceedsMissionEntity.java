@@ -25,6 +25,7 @@ public class ProceedsMissionEntity extends MissionEntity{
             waitersMissionEntity.setWaiters(ordersEntity.getWaitersEntity());
             waitersMissionEntity.setMission(this);
         }
+        int oldProgress=waitersMissionEntity.getProgress();
         if(this.getDeadlineTime().after(Date.from(ZonedDateTime.now().toInstant()))){
             waitersMissionEntity.setProgress(waitersMissionEntity.getProgress()+ordersEntity.getOrderPrice());
         }
@@ -37,10 +38,10 @@ public class ProceedsMissionEntity extends MissionEntity{
             waitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId()).get();
         }
         if(this.getRequirementsForTheFirstAward()<=ordersEntity.getOrderPrice()){
-            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/(this.getRequirementsAmount()/this.getRequirementsForTheFirstAward())));
+            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/(this.getRequirementsAmount()/waitersMissionEntity.getProgress())));
         }
-        if(waitersMissionEntity.getProgress()>this.getRequirementsForTheFirstAward()){
-            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/((this.getRequirementsAmount()/this.getRequirementsForTheFirstAward())-waitersMissionEntity.getProgress())));
+        if(oldProgress>this.getRequirementsForTheFirstAward()){
+            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/((this.getRequirementsAmount()/(waitersMissionEntity.getProgress())-oldProgress))));
         }
         waitersRepository.save(waitersEntity);
         waitersMissionRepository.save(waitersMissionEntity);

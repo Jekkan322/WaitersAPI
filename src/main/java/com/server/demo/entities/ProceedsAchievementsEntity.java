@@ -24,6 +24,7 @@ public class ProceedsAchievementsEntity extends  AchievementsEntity{
             waitersAchievementsEntity.setWaiters(ordersEntity.getWaitersEntity());
             waitersAchievementsEntity.setAchievements(this);
         }
+        int oldprogress=waitersAchievementsEntity.getProgress();
         waitersAchievementsEntity.setProgress(waitersAchievementsEntity.getProgress()+ordersEntity.getOrderPrice());
         WaitersEntity waitersEntity;
         Optional<WaitersEntity> optionalWaitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId());
@@ -33,16 +34,20 @@ public class ProceedsAchievementsEntity extends  AchievementsEntity{
         else{
             waitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId()).get();
         }
+        int oldLevel=waitersAchievementsEntity.getLevel();
         if(waitersAchievementsEntity.getProgress()>=this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel()){
-            waitersAchievementsEntity.setLevel(waitersAchievementsEntity.getLevel()+1);
-            if(waitersAchievementsEntity.getLevel()==1){
-                waitersEntity.setRating(waitersEntity.getRating()+this.getInitialReward());
+            for(int i=oldLevel;(waitersAchievementsEntity.getProgress()-oldprogress)>this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel();i++){
+                waitersAchievementsEntity.setLevel(waitersAchievementsEntity.getLevel()+1);
+                if(waitersAchievementsEntity.getLevel()==1){
+                    waitersEntity.setRating(waitersEntity.getRating()+this.getInitialReward());
+                }
+                else if(waitersAchievementsEntity.getLevel()>1){
+                        waitersEntity.setRating(waitersEntity.getRating()+this.getIncreasingRewardWithNewLevel());
+                }
             }
-            else if(waitersAchievementsEntity.getLevel()>1){
-                waitersEntity.setRating(waitersEntity.getRating()+this.getIncreasingRewardWithNewLevel());
-            }
-            waitersRepository.save(waitersEntity);
+
         }
+        waitersRepository.save(waitersEntity);
         waitersAchievementsRepository.save(waitersAchievementsEntity);
 
     }
