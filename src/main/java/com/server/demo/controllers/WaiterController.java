@@ -5,6 +5,7 @@ import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.service.WaitersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,7 @@ public class WaiterController {
     }
 
     @GetMapping("/waiters/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getAllWaiters(){
         try{
             return ResponseEntity.ok(waitersService.getAllWaiters());

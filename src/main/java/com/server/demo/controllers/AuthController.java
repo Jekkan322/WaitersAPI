@@ -76,59 +76,62 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+        try{
+            if (userRespository.existsByUsername(signupRequest.getUsername())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Username is exist"));
+            }
 
-        if (userRespository.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is exist"));
+            if (userRespository.existsByEmail(signupRequest.getEmail())) {
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Email is exist"));
+            }
+
+            User user = new User(signupRequest.getUsername(),
+                    signupRequest.getEmail(),
+                    passwordEncoder.encode(signupRequest.getPassword()));
+
+            Set<String> reqRoles = signupRequest.getRoles();
+            Set<Role> roles = new HashSet<>();
+
+            if (reqRoles == null) {
+                Role userRole = roleRepository
+                        .findByName(ERole.ROLE_USER)
+                        .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
+                roles.add(userRole);
+            } else {
+                reqRoles.forEach(r -> {
+                    switch (r) {
+                        case "admin":
+                            Role adminRole = roleRepository
+                                    .findByName(ERole.ROLE_ADMIN)
+                                    .orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
+                            roles.add(adminRole);
+
+                            break;
+                        case "mod":
+                            Role modRole = roleRepository
+                                    .findByName(ERole.ROLE_MODERATOR)
+                                    .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
+                            roles.add(modRole);
+
+                            break;
+
+                        default:
+                            Role userRole = roleRepository
+                                    .findByName(ERole.ROLE_USER)
+                                    .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
+                            roles.add(userRole);
+                    }
+                });
+            }
+            user.setRoles(roles);
+            userRespository.save(user);
+            return ResponseEntity.ok(new MessageResponse("User CREATED"));
+        }catch (Exception e){
+                return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
-
-        if (userRespository.existsByEmail(signupRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is exist"));
-        }
-
-        User user = new User(signupRequest.getUsername(),
-                signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()));
-
-        Set<String> reqRoles = signupRequest.getRoles();
-        Set<Role> roles = new HashSet<>();
-
-        if (reqRoles == null) {
-            Role userRole = roleRepository
-                    .findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
-            roles.add(userRole);
-        } else {
-            reqRoles.forEach(r -> {
-                switch (r) {
-                    case "admin":
-                        Role adminRole = roleRepository
-                                .findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error, Role ADMIN is not found"));
-                        roles.add(adminRole);
-
-                        break;
-                    case "mod":
-                        Role modRole = roleRepository
-                                .findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
-                        roles.add(modRole);
-
-                        break;
-
-                    default:
-                        Role userRole = roleRepository
-                                .findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
-                        roles.add(userRole);
-                }
-            });
-        }
-        user.setRoles(roles);
-        userRespository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User CREATED"));
     }
 }

@@ -36,7 +36,7 @@ public class ProceedsAchievementsEntity extends  AchievementsEntity{
         }
         int oldLevel=waitersAchievementsEntity.getLevel();
         if(waitersAchievementsEntity.getProgress()>=this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel()){
-            while((waitersAchievementsEntity.getProgress())>this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel()){
+            while((waitersAchievementsEntity.getProgress())>=this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel()){
                 waitersAchievementsEntity.setLevel(waitersAchievementsEntity.getLevel()+1);
                 if(waitersAchievementsEntity.getLevel()==1){
                     waitersEntity.setRating(waitersEntity.getRating()+this.getInitialReward());
