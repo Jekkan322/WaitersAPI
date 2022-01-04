@@ -24,7 +24,7 @@ public class WaiterController {
     }
 
     @GetMapping("/waiters/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getAllWaiters(){
         try{
             return ResponseEntity.ok(waitersService.getAllWaiters());
