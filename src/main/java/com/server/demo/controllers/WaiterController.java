@@ -64,6 +64,17 @@ public class WaiterController {
         }
     }
 
+    @GetMapping("waiters/{id}/allAchievements")
+    public ResponseEntity getWaiterAllAchievements(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(waitersService.getAllAchievements(id));
+        }catch (WaiterNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
 
     /*@GetMapping("/")
     public String home(Map<String, Object> model){
