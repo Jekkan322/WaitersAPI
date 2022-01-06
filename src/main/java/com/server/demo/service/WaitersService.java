@@ -111,14 +111,16 @@ public class WaitersService {
             }
         }
         List<MissionForMobile> result= new ArrayList<>();
-        for(MissionEntity missionEntity:resultMissions){
+        for(MissionEntity missionEntity:missionRepository.findAll()){
             for(WaitersMissionEntity waitersMissionEntity:resultWaitersMissions){
                 if(missionEntity.getId()==waitersMissionEntity.getMission().getId()){
                     result.add(MissionForMobile.toModel(missionEntity,waitersMissionEntity));
                 }
             }
+            if(waitersMissionRepository.findByMission(missionEntity).isPresent()){
+                result.add(MissionForMobile.toModel(missionEntity,new WaitersMissionEntity()));
+            }
         }
         return result;
-
     }
 }
