@@ -4,6 +4,9 @@ import com.server.demo.entities.DishOrderEntity;
 import com.server.demo.entities.OrdersEntity;
 import com.server.demo.entities.WaitersEntity;
 
+import javax.persistence.Basic;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.Set;
 

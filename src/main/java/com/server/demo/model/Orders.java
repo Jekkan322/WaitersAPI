@@ -3,13 +3,15 @@ package com.server.demo.model;
 import com.server.demo.entities.OrdersEntity;
 import com.server.demo.entities.WaitersEntity;
 
+import javax.persistence.Basic;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 public class Orders{
     private Long id;
 
     private Long waitersEntityId;
-
 
     private java.util.Date orderTime;
 
