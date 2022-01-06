@@ -74,6 +74,17 @@ public class WaiterController {
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }
+    @GetMapping("waiters/{id}/allMissions")
+    public ResponseEntity getWaiterAllMissions(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(waitersService.getAllMissions(id));
+        }catch (WaiterNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
 
 
     /*@GetMapping("/")

@@ -1,14 +1,12 @@
 package com.server.demo.service;
 
-import com.server.demo.entities.AchievementsEntity;
-import com.server.demo.entities.WaitersAchievementsEntity;
-import com.server.demo.entities.WaitersEntity;
+import com.server.demo.entities.*;
 import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.model.Achievements;
+import com.server.demo.model.Mission;
+import com.server.demo.model.MissionForMobile;
 import com.server.demo.model.Waiters;
-import com.server.demo.repositories.AchievementsRepository;
-import com.server.demo.repositories.WaitersAchievementsRepository;
-import com.server.demo.repositories.WaitersRepository;
+import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +25,12 @@ public class WaitersService {
 
     @Autowired
     private WaitersAchievementsRepository waitersAchievementsRepository;
+
+    @Autowired
+    private MissionRepository missionRepository;
+
+    @Autowired
+    private WaitersMissionRepository waitersMissionRepository;
 
     public List<Waiters> searchByName(String firstName,String lastName,String middleName){
         Collection<WaitersEntity> waiters =waitersRepository.findByFullName(lastName,firstName,middleName);
@@ -91,5 +95,30 @@ public class WaitersService {
             }
         }
         return result;
+    }
+
+    public List<MissionForMobile> getAllMissions(Long id) throws WaiterNotFoundException {
+        WaitersEntity waiters = waitersRepository.findById(id).get();
+        if(waiters==null){
+            throw new WaiterNotFoundException("Пользователь не найден");
+        }
+        List<MissionEntity> resultMissions=new ArrayList<>();
+        List<WaitersMissionEntity> resultWaitersMissions= new ArrayList<>();
+        for(WaitersMissionEntity waitersMission: waitersMissionRepository.findAll()){
+            if(waitersMission.getWaiters().getId()==waiters.getId()){
+                resultMissions.add(missionRepository.findById(waitersMission.getMission().getId()).get());
+                resultWaitersMissions.add(waitersMission);
+            }
+        }
+        List<MissionForMobile> result= new ArrayList<>();
+        for(MissionEntity missionEntity:resultMissions){
+            for(WaitersMissionEntity waitersMissionEntity:resultWaitersMissions){
+                if(missionEntity.getId()==waitersMissionEntity.getMission().getId()){
+                    result.add(MissionForMobile.toModel(missionEntity,waitersMissionEntity));
+                }
+            }
+        }
+        return result;
+
     }
 }
