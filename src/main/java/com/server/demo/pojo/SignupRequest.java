@@ -5,9 +5,7 @@ import com.server.demo.entities.Role;
 import java.util.Set;
 
 public class SignupRequest {
-
     private String username;
-    private String email;
     private Set<String> roles;
     private String password;
     public String getUsername() {
@@ -15,12 +13,6 @@ public class SignupRequest {
     }
     public void setUsername(String username) {
         this.username = username;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public Set<String> getRoles() {
         return roles;

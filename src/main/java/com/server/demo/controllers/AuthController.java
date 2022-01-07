@@ -70,7 +70,6 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 roles));
     }
 
@@ -83,14 +82,8 @@ public class AuthController {
                         .body(new MessageResponse("Error: Username is exist"));
             }
 
-            if (userRespository.existsByEmail(signupRequest.getEmail())) {
-                return ResponseEntity
-                        .badRequest()
-                        .body(new MessageResponse("Error: Email is exist"));
-            }
 
             User user = new User(signupRequest.getUsername(),
-                    signupRequest.getEmail(),
                     passwordEncoder.encode(signupRequest.getPassword()));
 
             Set<String> reqRoles = signupRequest.getRoles();
@@ -98,8 +91,8 @@ public class AuthController {
 
             if (reqRoles == null) {
                 Role userRole = roleRepository
-                        .findByName(ERole.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
+                        .findByName(ERole.ROLE_WAITER)
+                        .orElseThrow(() -> new RuntimeException("Error, Role waiter is not found"));
                 roles.add(userRole);
             } else {
                 reqRoles.forEach(r -> {
@@ -111,17 +104,9 @@ public class AuthController {
                             roles.add(adminRole);
 
                             break;
-                        case "mod":
-                            Role modRole = roleRepository
-                                    .findByName(ERole.ROLE_MODERATOR)
-                                    .orElseThrow(() -> new RuntimeException("Error, Role MODERATOR is not found"));
-                            roles.add(modRole);
-
-                            break;
-
                         default:
                             Role userRole = roleRepository
-                                    .findByName(ERole.ROLE_USER)
+                                    .findByName(ERole.ROLE_WAITER)
                                     .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
                             roles.add(userRole);
                     }

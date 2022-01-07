@@ -102,11 +102,9 @@ public class WaitersService {
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        List<MissionEntity> resultMissions=new ArrayList<>();
         List<WaitersMissionEntity> resultWaitersMissions= new ArrayList<>();
         for(WaitersMissionEntity waitersMission: waitersMissionRepository.findAll()){
             if(waitersMission.getWaiters().getId()==waiters.getId()){
-                resultMissions.add(missionRepository.findById(waitersMission.getMission().getId()).get());
                 resultWaitersMissions.add(waitersMission);
             }
         }
@@ -117,7 +115,7 @@ public class WaitersService {
                     result.add(MissionForMobile.toModel(missionEntity,waitersMissionEntity));
                 }
             }
-            if(waitersMissionRepository.findByMission(missionEntity).isPresent()){
+            if(!waitersMissionRepository.findByWaitersIdAndMissionId(waiters.getId(),missionEntity.getId()).isPresent()){
                 result.add(MissionForMobile.toModel(missionEntity,new WaitersMissionEntity()));
             }
         }

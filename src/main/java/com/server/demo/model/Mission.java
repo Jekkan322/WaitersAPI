@@ -16,9 +16,8 @@ public class Mission {
 
     private Long amountReward;
 
-
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Date deadlineTime;
 
     public static Mission toModel(MissionEntity missionEntity){

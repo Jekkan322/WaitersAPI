@@ -22,8 +22,8 @@ public abstract class AchievementsEntity{
     private String descriptionAchievement;
     private int requiredInitialAmount;
     private int increasingAmountWithNewLevel;
-    private Long initialReward;
-    private Long increasingRewardWithNewLevel;
+    /*private Long initialReward;
+    private Long increasingRewardWithNewLevel;*/
 
     @OneToMany(mappedBy = "achievements")
     Set<WaitersAchievementsEntity> waitersAchievements;
@@ -51,21 +51,6 @@ public abstract class AchievementsEntity{
         this.increasingAmountWithNewLevel = increasingAmountWithNewLevel;
     }
 
-    public Long getInitialReward() {
-        return initialReward;
-    }
-
-    public void setInitialReward(Long initialReward) {
-        this.initialReward = initialReward;
-    }
-
-    public Long getIncreasingRewardWithNewLevel() {
-        return increasingRewardWithNewLevel;
-    }
-
-    public void setIncreasingRewardWithNewLevel(Long increasingRewardWithNewLevel) {
-        this.increasingRewardWithNewLevel = increasingRewardWithNewLevel;
-    }
 
     public Set<WaitersAchievementsEntity> getWaitersAchievements() {
         return waitersAchievements;

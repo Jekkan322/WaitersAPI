@@ -25,7 +25,7 @@ public abstract class MissionEntity {
     private Long requirementsAmount;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Date deadlineTime;
 
 
