@@ -20,6 +20,10 @@ public class Mission {
     @Temporal(TemporalType.DATE)
     private java.util.Date deadlineTime;
 
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private java.util.Date dateOfCreation;
+
     public static Mission toModel(MissionEntity missionEntity){
         Mission model= new Mission();
         model.setId(missionEntity.getId());
@@ -27,6 +31,7 @@ public class Mission {
         model.setMissionDescription(missionEntity.getMissionName());
         model.setAmountReward(missionEntity.getAmountReward());
         model.setDeadlineTime(missionEntity.getDeadlineTime());
+        model.setDateOfCreation(missionEntity.getDateOfCreation());
         return model;
     }
 
@@ -72,5 +77,13 @@ public class Mission {
 
     public void setDeadlineTime(Date deadlineTime) {
         this.deadlineTime = deadlineTime;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 }

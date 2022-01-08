@@ -8,12 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Repository
 public interface WaitersAchievementsRepository extends CrudRepository<WaitersAchievementsEntity,Long> {
 
     Optional<WaitersAchievementsEntity> findByWaitersAndAchievements(WaitersEntity waiters, AchievementsEntity achievements);
+    Collection<WaitersAchievementsEntity> findByWaiters(WaitersEntity waiters);
+    @Query("select u from WaitersAchievementsEntity u WHERE u.level>0 and u.waiters.id=?1")
+    Collection<WaitersAchievementsEntity> filterWaiterByLevel(Long waitersId);
 
 
 }

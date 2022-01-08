@@ -1,6 +1,7 @@
 package com.server.demo.entities;
 
 
+import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
 import com.server.demo.repositories.WaitersRepository;
 
@@ -28,11 +29,14 @@ public abstract class MissionEntity {
     @Temporal(TemporalType.DATE)
     private java.util.Date deadlineTime;
 
+    @Basic
+    @Temporal(TemporalType.DATE)
+    private java.util.Date dateOfCreation;
 
     @OneToMany(mappedBy = "mission")
     Set<WaitersMissionEntity> waitersMission;
 
-    abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository, WaitersRepository waitersRepository);
+    abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository, WaitersRepository waitersRepository,RatingEntity ratingEntity,RatingRepository ratingRepository);
 
     public MissionEntity(){
 
@@ -101,5 +105,13 @@ public abstract class MissionEntity {
 
     public void setDeadlineTime(Date deadlineTime) {
         this.deadlineTime = deadlineTime;
+    }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 }

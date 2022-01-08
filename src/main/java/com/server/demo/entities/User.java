@@ -27,6 +27,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "waiters_id", referencedColumnName = "id")
+    private WaitersEntity waiters;
+
     public User() {
     }
 

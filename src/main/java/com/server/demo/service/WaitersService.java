@@ -2,17 +2,13 @@ package com.server.demo.service;
 
 import com.server.demo.entities.*;
 import com.server.demo.exception.WaiterNotFoundException;
-import com.server.demo.model.Achievements;
-import com.server.demo.model.Mission;
-import com.server.demo.model.MissionForMobile;
-import com.server.demo.model.Waiters;
+import com.server.demo.model.*;
 import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +27,9 @@ public class WaitersService {
 
     @Autowired
     private WaitersMissionRepository waitersMissionRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     public List<Waiters> searchByName(String firstName,String lastName,String middleName){
         Collection<WaitersEntity> waiters =waitersRepository.findByFullName(lastName,firstName,middleName);
@@ -78,23 +77,8 @@ public class WaitersService {
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        List<AchievementsEntity> resultAchievements=new ArrayList<>();
-        List<WaitersAchievementsEntity> resultWaitersAchievements= new ArrayList<>();
-        for(WaitersAchievementsEntity waitersAchievements:waitersAchievementsRepository.findAll()){
-            if(waitersAchievements.getWaiters().getId()==waiters.getId() && waitersAchievements.getLevel()>0){
-                resultAchievements.add(achievementsRepository.findById(waitersAchievements.getAchievements().getId()).get());
-                resultWaitersAchievements.add(waitersAchievements);
-            }
-        }
-        List<Achievements> result = new ArrayList<>();
-        for(AchievementsEntity achievementsEntity:resultAchievements){
-            for(WaitersAchievementsEntity waitersAchievementsEntity:resultWaitersAchievements){
-                if(achievementsEntity.getId()==waitersAchievementsEntity.getAchievements().getId()){
-                    result.add(Achievements.toModel(achievementsEntity,waitersAchievementsEntity));
-                }
-            }
-        }
-        return result;
+        Collection<WaitersAchievementsEntity> resultWaitersAchievements=waitersAchievementsRepository.filterWaiterByLevel(waiters.getId());
+        return resultWaitersAchievements.stream().map(Achievements::toModel).collect(Collectors.toList());
     }
 
     public List<MissionForMobile> getAllMissions(Long id) throws WaiterNotFoundException {
@@ -102,12 +86,7 @@ public class WaitersService {
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        List<WaitersMissionEntity> resultWaitersMissions= new ArrayList<>();
-        for(WaitersMissionEntity waitersMission: waitersMissionRepository.findAll()){
-            if(waitersMission.getWaiters().getId()==waiters.getId()){
-                resultWaitersMissions.add(waitersMission);
-            }
-        }
+        Collection<WaitersMissionEntity> resultWaitersMissions= waitersMissionRepository.filterWaiterByMissions(waiters.getId());
         List<MissionForMobile> result= new ArrayList<>();
         for(MissionEntity missionEntity:missionRepository.findAll()){
             for(WaitersMissionEntity waitersMissionEntity:resultWaitersMissions){
@@ -120,5 +99,33 @@ public class WaitersService {
             }
         }
         return result;
+    }
+
+    public List<WaitersForMobile> filter(Long id,String filter) throws WaiterNotFoundException {
+        WaitersEntity waiters = waitersRepository.findById(id).get();
+        if(waiters==null){
+            throw new WaiterNotFoundException("Пользователь не найден");
+        }
+        Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateNow);
+        switch (filter){
+            case("day"):
+                calendar.add(Calendar.DAY_OF_MONTH,-1);
+                break;
+            case("week"):
+                calendar.add(Calendar.WEEK_OF_MONTH,-1);
+                break;
+            case("month"):
+                calendar.add(Calendar.MONTH,-1);
+                break;
+        }
+        Date date=calendar.getTime();
+        List<WaitersEntity> result=new ArrayList<>();
+        for(WaitersEntity waitersEntity:waitersRepository.findAll()){
+            waitersEntity.setRating(ratingRepository.filterAllRating(date,waitersEntity.getId()));
+            result.add(waitersEntity);
+        }
+        return result.stream().map(WaitersForMobile::toModel).sorted((h1, h2) -> h2.getRating().compareTo(h1.getRating())).collect(Collectors.toList());
     }
 }

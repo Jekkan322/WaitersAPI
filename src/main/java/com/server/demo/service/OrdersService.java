@@ -1,6 +1,7 @@
 package com.server.demo.service;
 
 import com.server.demo.entities.OrdersEntity;
+import com.server.demo.entities.RatingEntity;
 import com.server.demo.exception.OrderNotFoundException;
 import com.server.demo.model.Orders;
 import com.server.demo.model.OrdersForCreate;
@@ -75,6 +76,7 @@ public class OrdersService {
 
     public Orders ordersCompleted(Long id) throws OrderNotFoundException {
         OrdersEntity ordersEntity=ordersRepository.findById(id).get();
+        RatingEntity ratingEntity = new RatingEntity();
         if(ordersEntity==null){
             throw new OrderNotFoundException("Заказ не найден");
         }
@@ -86,7 +88,7 @@ public class OrdersService {
         }
         if(ordersEntity.isOrderStatus()){
             achievementsService.checkAllAchievements(ordersEntity);
-            missionService.checkAllMissions(ordersEntity);
+            missionService.checkAllMissions(ordersEntity,ratingEntity);
         }
         return Orders.toModel(ordersRepository.save(ordersEntity));
 

@@ -18,7 +18,7 @@ public class WaitersEntity {
     private Long rating;
 
     @Basic
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private java.util.Date dateOfEntry;
 
     @OneToMany(mappedBy = "waiters")
@@ -26,6 +26,10 @@ public class WaitersEntity {
 
     @OneToMany(mappedBy = "waiters")
     Set<WaitersMissionEntity > waitersMission;
+
+    @OneToOne(mappedBy = "waiters")
+    private User user;
+
 
 
     public void processOrder(OrdersEntity orderEntity){
