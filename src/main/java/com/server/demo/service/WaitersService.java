@@ -122,6 +122,7 @@ public class WaitersService {
         }
         Date date=calendar.getTime();
         List<WaitersEntity> result=new ArrayList<>();
+        List<WaitersForMobile> resultModel=new ArrayList<>();
         Long resultFilter;
         for(WaitersEntity waitersEntity:waitersRepository.findAll()){
             resultFilter=ratingRepository.filterAllRating(date,waitersEntity.getId());
@@ -132,6 +133,9 @@ public class WaitersService {
             }
             result.add(waitersEntity);
         }
-        return result.stream().map(WaitersForMobile::toModel).sorted((h1, h2) -> h2.getRating().compareTo(h1.getRating())).collect(Collectors.toList());
+        for(WaitersEntity waitersEntity:result){
+            resultModel.add(WaitersForMobile.toModel(waitersEntity,waiters.getId()));
+        }
+        return resultModel.stream().sorted((h1, h2) -> h2.getRating().compareTo(h1.getRating())).collect(Collectors.toList());
     }
 }

@@ -7,16 +7,23 @@ public class WaitersForMobile {
     private String lastName;
     private String middleName;
     private Long rating;
+    private boolean isCurrentUser;
 
     public WaitersForMobile(){
     }
 
-    public static WaitersForMobile toModel(WaitersEntity waitersEntity){
+    public static WaitersForMobile toModel(WaitersEntity waitersEntity,Long id){
         WaitersForMobile model=new WaitersForMobile();
         model.setFirstName(waitersEntity.getFirstName());
         model.setLastName(waitersEntity.getLastName());
         model.setMiddleName(waitersEntity.getMiddleName());
         model.setRating(waitersEntity.getRating());
+        if(waitersEntity.getId()==id){
+            model.setCurrentUser(true);
+        }
+        else{
+            model.setCurrentUser(false);
+        }
         return model;
     }
 
@@ -50,5 +57,14 @@ public class WaitersForMobile {
 
     public void setRating(Long rating) {
         this.rating = rating;
+    }
+
+
+    public boolean isCurrentUser() {
+        return isCurrentUser;
+    }
+
+    public void setCurrentUser(boolean currentUser) {
+        isCurrentUser = currentUser;
     }
 }
