@@ -85,8 +85,8 @@ public class WaiterController {
         }
     }
 
-    @GetMapping("waiters/{filter}/{id}")
-    public ResponseEntity filterRating(@PathVariable Long id,@PathVariable String filter){
+    @GetMapping("waiters/{id}/filter")
+    public ResponseEntity filterRating(@PathVariable Long id,@RequestParam String filter){
         try{
             return ResponseEntity.ok(waitersService.filter(id,filter));
         }catch (WaiterNotFoundException e){
