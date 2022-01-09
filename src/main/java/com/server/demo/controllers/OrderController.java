@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class OrderController {
     @Autowired
     OrdersService ordersService;
