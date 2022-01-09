@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class WaiterController {
 
     @Autowired
@@ -23,7 +24,6 @@ public class WaiterController {
         }
     }
 
-    @CrossOrigin(origins = "https://waitersproject.herokuapp.com")
     @GetMapping("/waiters/all")
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getAllWaiters(){
