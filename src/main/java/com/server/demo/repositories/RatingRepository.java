@@ -20,4 +20,7 @@ public interface RatingRepository extends CrudRepository<RatingEntity,Long> {
             "group by waitersEntity\n" +
             "having waitersEntity.id =?2")
     Long filterAllRating(Date date,Long waiterId);
+
+    @Query("select max(timeOfReceipt) from RatingEntity")
+    Date lastRating();
 }
