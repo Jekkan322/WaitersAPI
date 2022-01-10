@@ -18,4 +18,7 @@ public interface WaitersMissionRepository extends CrudRepository<WaitersMissionE
 
     @Query("select u from WaitersMissionEntity u WHERE u.waiters.id=?1")
     Collection<WaitersMissionEntity> filterWaiterByMissions(Long waitersId);
+
+    @Query("select sum(progress) from WaitersMissionEntity where mission.id=?1")
+    Integer allProgress(Long missionId);
 }

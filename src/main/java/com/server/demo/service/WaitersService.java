@@ -17,7 +17,7 @@ public class WaitersService {
     private WaitersRepository waitersRepository;
 
     @Autowired
-    private AchievementsRepository achievementsRepository;
+    private DishOrderRepository dishOrderRepository;
 
     @Autowired
     private WaitersAchievementsRepository waitersAchievementsRepository;
@@ -30,6 +30,9 @@ public class WaitersService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    private OrdersRepository ordersRepository;
 
     public List<Waiters> searchByName(String firstName,String lastName,String middleName){
         Collection<WaitersEntity> waiters =waitersRepository.findByFullName(lastName,firstName,middleName);
@@ -137,5 +140,53 @@ public class WaitersService {
             resultModel.add(WaitersForMobile.toModel(waitersEntity,waiters.getId()));
         }
         return resultModel.stream().sorted((h1, h2) -> h2.getRating().compareTo(h1.getRating())).collect(Collectors.toList());
+    }
+
+    public Statistics statistics(Long id,String filter) throws WaiterNotFoundException {
+        WaitersEntity waiters = waitersRepository.findById(id).get();
+        if(waiters==null){
+            throw new WaiterNotFoundException("Пользователь не найден");
+        }
+        Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateNow);
+        switch (filter){
+            case("day"):
+                calendar.add(Calendar.DAY_OF_MONTH,-1);
+                break;
+            case("week"):
+                calendar.add(Calendar.WEEK_OF_MONTH,-1);
+                break;
+            case("month"):
+                calendar.add(Calendar.MONTH,-1);
+                break;
+        }
+        Date date=calendar.getTime();
+        Statistics result=new Statistics();
+        Integer orders=ordersRepository.countClosedOrders(date,waiters.getId());
+        if(orders==null){
+            result.setOrders(0);
+        }
+        else{
+            result.setOrders(orders);
+        }
+        Long rating=ratingRepository.filterAllRating(date,waiters.getId());
+        if(rating==null){
+            result.setRating(0);
+        }else{
+            result.setRating(rating.intValue());
+        }
+        Integer revenue=ordersRepository.waiterRevenue(date,waiters.getId());
+        if(revenue==null){
+            result.setRevenue(0);
+        }else{
+            result.setRevenue(revenue);
+        }
+        if(dishOrderRepository.goListCount(date,waiters.getId())==null){
+            result.setGoList(0);
+        }else{
+            result.setGoList(dishOrderRepository.goListCount(date,waiters.getId()));
+        }
+        return result;
     }
 }

@@ -97,6 +97,17 @@ public class WaiterController {
         }
     }
 
+    @GetMapping("waiters/{id}/statistics")
+    public ResponseEntity getStatistics(@PathVariable Long id,@RequestParam String filter){
+        try{
+            return ResponseEntity.ok(waitersService.statistics(id,filter));
+        }catch (WaiterNotFoundException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
 
 
     /*@GetMapping("/")

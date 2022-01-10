@@ -1,9 +1,18 @@
 package com.server.demo.repositories;
 
 import com.server.demo.entities.OrdersEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.Optional;
+
 @Repository
 public interface OrdersRepository extends CrudRepository<OrdersEntity,Long> {
+    @Query("SELECT COUNT(waitersEntity.id) FROM OrdersEntity WHERE waitersEntity.id=?2 and orderTime>?1 and orderStatus=true")
+    Integer countClosedOrders(Date date, Long waitersId);
+
+    @Query("SELECT sum(orderPrice) FROM OrdersEntity WHERE waitersEntity.id=?2 and orderTime>?1 and orderStatus=true")
+    Integer waiterRevenue(Date date, Long waitersId);
 }
