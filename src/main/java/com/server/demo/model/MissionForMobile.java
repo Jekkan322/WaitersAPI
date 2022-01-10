@@ -4,20 +4,20 @@ import com.server.demo.entities.MissionEntity;
 import com.server.demo.entities.WaitersMissionEntity;
 
 public class MissionForMobile {
-    private String missionName;
-    private String missionDescription;
+    private String name;
+    private String description;
 
-    private Long amountReward;
+    private Long prize;
     private boolean completed;
-    private Long requirementsAmount;
+    private int purpose;
     private int progress;
 
     public static MissionForMobile toModel(MissionEntity missionEntity, WaitersMissionEntity waitersMissionEntity){
         MissionForMobile model= new MissionForMobile();
-        model.setMissionName(missionEntity.getMissionName());
-        model.setMissionDescription(missionEntity.getMissionDescription());
-        model.setAmountReward(missionEntity.getAmountReward());
-        model.setRequirementsAmount(missionEntity.getRequirementsAmount());
+        model.setName(missionEntity.getMissionName());
+        model.setDescription(missionEntity.getMissionDescription());
+        model.setPrize(missionEntity.getAmountReward());
+        model.setPurpose(missionEntity.getRequirementsAmount().intValue());
         model.setProgress(waitersMissionEntity.getProgress());
         if(waitersMissionEntity.getProgress()>=missionEntity.getRequirementsAmount()){
             model.setCompleted(true);
@@ -33,28 +33,28 @@ public class MissionForMobile {
 
     }
 
-    public String getMissionName() {
-        return missionName;
+    public String getName() {
+        return name;
     }
 
-    public void setMissionName(String missionName) {
-        this.missionName = missionName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMissionDescription() {
-        return missionDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMissionDescription(String missionDescription) {
-        this.missionDescription = missionDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Long getAmountReward() {
-        return amountReward;
+    public Long getPrize() {
+        return prize;
     }
 
-    public void setAmountReward(Long amountReward) {
-        this.amountReward = amountReward;
+    public void setPrize(Long prize) {
+        this.prize = prize;
     }
 
     public boolean isCompleted() {
@@ -65,12 +65,12 @@ public class MissionForMobile {
         this.completed = completed;
     }
 
-    public Long getRequirementsAmount() {
-        return requirementsAmount;
+    public int getPurpose() {
+        return purpose;
     }
 
-    public void setRequirementsAmount(Long requirementsAmount) {
-        this.requirementsAmount = requirementsAmount;
+    public void setPurpose(int purpose) {
+        this.purpose = purpose;
     }
 
     public int getProgress() {

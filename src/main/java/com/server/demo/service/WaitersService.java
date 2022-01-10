@@ -139,7 +139,7 @@ public class WaitersService {
         for(WaitersEntity waitersEntity:result){
             resultModel.add(WaitersForMobile.toModel(waitersEntity,waiters.getId()));
         }
-        return resultModel.stream().sorted((h1, h2) -> h2.getRating().compareTo(h1.getRating())).collect(Collectors.toList());
+        return resultModel.stream().sorted((h1, h2) -> h2.getScores().compareTo(h1.getScores())).collect(Collectors.toList());
     }
 
     public Statistics statistics(Long id,String filter) throws WaiterNotFoundException {

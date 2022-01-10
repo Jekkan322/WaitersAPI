@@ -1,14 +1,12 @@
 package com.server.demo.model;
 
-import com.server.demo.entities.AchievementsEntity;
 import com.server.demo.entities.WaitersAchievementsEntity;
-import com.server.demo.entities.WaitersEntity;
 
 public class Achievements {
 
-    private String nameAchievement;
-    private String descriptionAchievement;
-    private int progressAchievement;
+    private String name;
+    private String description;
+    private int progress;
     private int level;
     private int purpose;
 
@@ -17,36 +15,36 @@ public class Achievements {
     }
     public static Achievements toModel(WaitersAchievementsEntity waitersAchievementsEntity){
         Achievements model=new Achievements();
-        model.setNameAchievement(waitersAchievementsEntity.getAchievements().getNameAchievement());
-        model.setDescriptionAchievement(waitersAchievementsEntity.getAchievements().getDescriptionAchievement());
+        model.setName(waitersAchievementsEntity.getAchievements().getNameAchievement());
+        model.setDescription(waitersAchievementsEntity.getAchievements().getDescriptionAchievement());
         model.setLevel(waitersAchievementsEntity.getLevel());
-        model.setProgressAchievement(waitersAchievementsEntity.getProgress());
+        model.setProgress(waitersAchievementsEntity.getProgress());
         model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()+1)*waitersAchievementsEntity.getAchievements().getIncreasingAmountWithNewLevel());
         return model;
     }
 
-    public String getNameAchievement() {
-        return nameAchievement;
+    public String getName() {
+        return name;
     }
 
-    public void setNameAchievement(String nameAchievement) {
-        this.nameAchievement = nameAchievement;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescriptionAchievement() {
-        return descriptionAchievement;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionAchievement(String descriptionAchievement) {
-        this.descriptionAchievement = descriptionAchievement;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int getProgressAchievement() {
-        return progressAchievement;
+    public int getProgress() {
+        return progress;
     }
 
-    public void setProgressAchievement(int progressAchievement) {
-        this.progressAchievement = progressAchievement;
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public int getLevel() {
