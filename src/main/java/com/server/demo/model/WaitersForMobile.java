@@ -6,7 +6,7 @@ public class WaitersForMobile {
     private String firstName;
     private String lastName;
     private String middleName;
-    private int scores;
+    private Integer scores;
     private boolean isCurrentUser;
 
     public WaitersForMobile(){
@@ -51,11 +51,11 @@ public class WaitersForMobile {
         this.middleName = middleName;
     }
 
-    public int getScores() {
+    public Integer getScores() {
         return scores;
     }
 
-    public void setScores(int scores) {
+    public void setScores(Integer scores) {
         this.scores = scores;
     }
 
