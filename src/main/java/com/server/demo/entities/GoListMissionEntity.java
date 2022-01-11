@@ -1,5 +1,6 @@
 package com.server.demo.entities;
 
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
@@ -56,5 +57,13 @@ public class GoListMissionEntity extends MissionEntity{
         }
         waitersRepository.save(waitersEntity);
         waitersMissionRepository.save(waitersMissionEntity);
+    }
+
+    public GoListMissionEntity(MissionForCreate missionForCreate){
+        super(missionForCreate);
+    }
+
+    public GoListMissionEntity(){
+
     }
 }

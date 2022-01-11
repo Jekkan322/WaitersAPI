@@ -27,6 +27,8 @@ public class DishOrderEntity {
     private OrdersEntity orders;
 
     private int amountDishes;
+    @Column(columnDefinition="bool default false")
+    private boolean goList;
 
 
     public static DishOrderEntity toEntity(DishOrder dishOrder, MenuRepository menuRepository, OrdersEntity ordersEntity, DishOrderRepository dishOrderRepository){
@@ -35,6 +37,7 @@ public class DishOrderEntity {
         dishOrderEntity.setOrders(ordersEntity);
         dishOrderEntity.setMenu(menuRepository.findById(dishOrder.getMenuId()).get());
         dishOrderEntity.setAmountDishes(dishOrder.getAmountDishes());
+        dishOrderEntity.setGoList(dishOrder.isGoList());
         dishOrderRepository.save(dishOrderEntity);
         return dishOrderEntity;
     }
@@ -73,5 +76,13 @@ public class DishOrderEntity {
 
     public void setAmountDishes(int amountDishes) {
         this.amountDishes = amountDishes;
+    }
+
+    public boolean isGoList() {
+        return goList;
+    }
+
+    public void setGoList(boolean goList) {
+        this.goList = goList;
     }
 }

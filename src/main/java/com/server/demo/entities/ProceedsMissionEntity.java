@@ -1,5 +1,6 @@
 package com.server.demo.entities;
 
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
@@ -30,6 +31,7 @@ public class ProceedsMissionEntity extends MissionEntity{
         int oldProgress=waitersMissionEntity.getProgress();
         if(this.getDeadlineTime().after(Date.from(ZonedDateTime.now().toInstant()))){
             waitersMissionEntity.setProgress(waitersMissionEntity.getProgress()+ordersEntity.getOrderPrice());
+
         }
         WaitersEntity waitersEntity;
         Optional<WaitersEntity> optionalWaitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId());
@@ -59,5 +61,13 @@ public class ProceedsMissionEntity extends MissionEntity{
 
         waitersRepository.save(waitersEntity);
         waitersMissionRepository.save(waitersMissionEntity);
+    }
+
+    public ProceedsMissionEntity(MissionForCreate missionForCreate){
+        super(missionForCreate);
+    }
+
+    public ProceedsMissionEntity(){
+
     }
 }

@@ -9,9 +9,10 @@ import java.util.Date;
 
 @Repository
 public interface DishOrderRepository extends CrudRepository<DishOrderEntity,Long> {
-    @Query("select sum(amountDishes) from DishOrderEntity WHERE menu.goList=true and orders.waitersEntity.id=?2 and orders.orderTime>?1")
+    @Query("select sum(amountDishes) from DishOrderEntity WHERE goList=true and orders.waitersEntity.id=?2 and orders.orderTime>?1")
     Integer goListCount(Date date,Long waitersId);
 
-    @Query("select sum(amountDishes) from DishOrderEntity WHERE menu.goList=true and orders.id=?1")
+    @Query("select sum(amountDishes) from DishOrderEntity WHERE goList=true and orders.id=?1")
     Integer goListOrder(Long ordersId);
+
 }

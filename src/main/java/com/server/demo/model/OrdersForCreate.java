@@ -65,4 +65,5 @@ public class OrdersForCreate {
     public void setOrderPrice(int orderPrice) {
         this.orderPrice = orderPrice;
     }
+
 }

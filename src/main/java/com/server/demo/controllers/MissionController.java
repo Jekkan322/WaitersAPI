@@ -1,6 +1,8 @@
 package com.server.demo.controllers;
 
 import com.server.demo.entities.MissionEntity;
+import com.server.demo.entities.ProceedsMissionEntity;
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,9 @@ public class MissionController {
     MissionService missionService;
 
     @PostMapping("mission/create")
-    public ResponseEntity createMission(@RequestBody MissionEntity missionEntity){
+    public ResponseEntity createMission(@RequestBody MissionForCreate missionForCreate){
         try{
-            return ResponseEntity.ok(missionService.createMission(missionEntity));
+            return ResponseEntity.ok(missionService.createMission(missionForCreate));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }

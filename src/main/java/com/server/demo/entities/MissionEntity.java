@@ -3,6 +3,7 @@ package com.server.demo.entities;
 
 import com.fasterxml.jackson.annotation.*;
 import com.server.demo.model.Mission;
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
@@ -46,7 +47,17 @@ public abstract class MissionEntity{
 
     }
 
-    @JsonCreator
+    public MissionEntity(MissionForCreate missionForCreate) {
+        this.missionName = missionForCreate.getMissionName();
+        this.missionDescription = missionForCreate.getMissionDescription();
+        this.amountReward = missionForCreate.getAmountReward();
+        this.requirementsForTheFirstAward = missionForCreate.getRequirementsForTheFirstAward();
+        this.requirementsAmount = missionForCreate.getRequirementsAmount();
+        this.deadlineTime = missionForCreate.getDeadlineTime();
+        this.dateOfCreation = missionForCreate.getDateOfCreation();
+    }
+
+    /*@JsonCreator
     MissionEntity(@JsonProperty("name") String missionName,@JsonProperty("description") String missionDescription,
                   @JsonProperty("prize") Long amountReward,@JsonProperty("personalPurpose") int requirementsForTheFirstAward,
                   @JsonProperty("purpose") Long requirementsAmount,@JsonProperty("deadline") Date deadlineTime,
@@ -58,7 +69,7 @@ public abstract class MissionEntity{
         this.requirementsAmount=requirementsAmount;
         this.deadlineTime=deadlineTime;
         this.dateOfCreation=dateOfCreation;
-    }
+    }*/
 
 
     public Long getId() {

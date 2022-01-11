@@ -1,8 +1,12 @@
 package com.server.demo.service;
 
+import com.server.demo.entities.GoListMissionEntity;
 import com.server.demo.entities.MissionEntity;
 import com.server.demo.entities.OrdersEntity;
+import com.server.demo.entities.ProceedsMissionEntity;
+import com.server.demo.exception.MissionTypeNotFoundException;
 import com.server.demo.model.Mission;
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.model.Restaurant;
 import com.server.demo.model.MissionsOfRestaurant;
 import com.server.demo.repositories.*;
@@ -37,9 +41,20 @@ public class MissionService {
         }
     }
 
-    public Mission createMission(MissionEntity missionEntity){
-        if(missionEntity.getDateOfCreation()==null){
-            missionEntity.setDateOfCreation(Date.from(ZonedDateTime.now().toInstant()));
+    public Mission createMission(MissionForCreate missionForCreate) throws MissionTypeNotFoundException {
+        if(missionForCreate.getDateOfCreation()==null){
+            missionForCreate.setDateOfCreation(Date.from(ZonedDateTime.now().toInstant()));
+        }
+        MissionEntity missionEntity=null;
+        switch(missionForCreate.getMissionType()){
+            case "proceeds":
+                missionEntity=new ProceedsMissionEntity(missionForCreate);
+                break;
+            case "goList":
+                missionEntity=new GoListMissionEntity(missionForCreate);
+                break;
+            default:
+                throw new MissionTypeNotFoundException("Данного типа миссии не существует");
         }
         return Mission.toModel(missionRepository.save(missionEntity));
     }

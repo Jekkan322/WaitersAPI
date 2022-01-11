@@ -10,6 +10,8 @@ public class DishOrder {
 
     private int amountDishes;
 
+    private Boolean goList;
+
     public DishOrder(){
 
     }
@@ -28,5 +30,13 @@ public class DishOrder {
 
     public void setAmountDishes(int amountDishes) {
         this.amountDishes = amountDishes;
+    }
+
+    public boolean isGoList() {
+        return goList;
+    }
+
+    public void setGoList(Boolean goList) {
+        this.goList = goList;
     }
 }
