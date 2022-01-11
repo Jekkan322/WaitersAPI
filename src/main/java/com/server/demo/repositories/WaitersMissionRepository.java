@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +22,7 @@ public interface WaitersMissionRepository extends CrudRepository<WaitersMissionE
 
     @Query("select sum(progress) from WaitersMissionEntity where mission.id=?1")
     Integer allProgress(Long missionId);
+
+    /*@Query("select  sum(progress) from WaitersMissionEntity Where waiters.id=?2 and dateProgress>?1 and mission.missionName='блюдо дня'")
+    Integer goListProgress(Date date, Long waitersId);*/
 }

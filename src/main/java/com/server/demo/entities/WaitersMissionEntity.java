@@ -22,6 +22,7 @@ public class WaitersMissionEntity {
     private int progress;
 
 
+
     public WaitersMissionEntity(){
 
     }
@@ -57,4 +58,6 @@ public class WaitersMissionEntity {
     public void setProgress(int progress) {
         this.progress = progress;
     }
+
+
 }

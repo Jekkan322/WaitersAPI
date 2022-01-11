@@ -1,7 +1,10 @@
 package com.server.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.demo.entities.MissionEntity;
 import com.server.demo.entities.WaitersMissionEntity;
+
+import java.util.Date;
 
 public class MissionForMobile {
     private String name;
@@ -11,6 +14,8 @@ public class MissionForMobile {
     private boolean completed;
     private int purpose;
     private int progress;
+    @JsonFormat(pattern="dd.MM.yyyy")
+    private Date deadline;
 
     public static MissionForMobile toModel(MissionEntity missionEntity, WaitersMissionEntity waitersMissionEntity){
         MissionForMobile model= new MissionForMobile();
@@ -25,6 +30,7 @@ public class MissionForMobile {
         else{
             model.setCompleted(false);
         }
+        model.setDeadline(missionEntity.getDeadlineTime());
         return model;
     }
 
@@ -79,5 +85,13 @@ public class MissionForMobile {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }
