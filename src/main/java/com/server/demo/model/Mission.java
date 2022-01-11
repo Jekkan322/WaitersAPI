@@ -13,6 +13,7 @@ public class Mission {
 
     private String missionName;
     private String missionDescription;
+    private String missionType;
 
     private Long amountReward;
 
@@ -85,5 +86,13 @@ public class Mission {
 
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
+    }
+
+    public String getMissionType() {
+        return missionType;
+    }
+
+    public void setMissionType(String missionType) {
+        this.missionType = missionType;
     }
 }

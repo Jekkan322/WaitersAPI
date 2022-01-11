@@ -6,10 +6,7 @@ import com.server.demo.entities.RatingEntity;
 import com.server.demo.model.Mission;
 import com.server.demo.model.MissionsOfRestaurant;
 import com.server.demo.model.Orders;
-import com.server.demo.repositories.MissionRepository;
-import com.server.demo.repositories.RatingRepository;
-import com.server.demo.repositories.WaitersMissionRepository;
-import com.server.demo.repositories.WaitersRepository;
+import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,9 +29,12 @@ public class MissionService {
     @Autowired
     RatingRepository ratingRepository;
 
-    public void checkAllMissions(OrdersEntity ordersEntity,RatingEntity ratingEntity){
+    @Autowired
+    DishOrderRepository dishOrderRepository;
+
+    public void checkAllMissions(OrdersEntity ordersEntity){
         for(MissionEntity missionEntity:missionRepository.findAll()){
-            missionEntity.processOrder(ordersEntity,waitersMissionRepository,waitersRepository,ratingEntity,ratingRepository);
+            missionEntity.processOrder(ordersEntity,waitersMissionRepository,waitersRepository,ratingRepository,dishOrderRepository);
         }
     }
 
@@ -50,10 +50,10 @@ public class MissionService {
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                result.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime()));
+                result.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                result.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime()));
+                result.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
         return result;

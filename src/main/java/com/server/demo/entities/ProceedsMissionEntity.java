@@ -1,5 +1,6 @@
 package com.server.demo.entities;
 
+import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @DiscriminatorValue("proceeds")
 public class ProceedsMissionEntity extends MissionEntity{
     @Override
-    public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository, WaitersRepository waitersRepository, RatingEntity ratingEntity, RatingRepository ratingRepository) {
+    public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository, WaitersRepository waitersRepository, RatingRepository ratingRepository, DishOrderRepository dishOrderRepository) {
         WaitersMissionEntity waitersMissionEntity;
         Optional<WaitersMissionEntity> optionalWaitersMissionEntity=waitersMissionRepository.findByWaitersAndMission(ordersEntity.getWaitersEntity(),this);
         if(optionalWaitersMissionEntity.isPresent()){
@@ -38,19 +39,24 @@ public class ProceedsMissionEntity extends MissionEntity{
         else{
             waitersEntity=waitersRepository.findById(ordersEntity.getWaitersEntity().getId()).get();
         }
-        if(this.getRequirementsForTheFirstAward()<=ordersEntity.getOrderPrice()+waitersMissionEntity.getProgress()){
-            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/(this.getRequirementsAmount()/ordersEntity.getOrderPrice())));
-            ratingEntity.setRating(this.getAmountReward()/(this.getRequirementsAmount()/ordersEntity.getOrderPrice()));
+        if(oldProgress>=this.getRequirementsForTheFirstAward()){
+            RatingEntity ratingEntity=new RatingEntity();
+            waitersEntity.setRating(waitersEntity.getRating()+Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/ordersEntity.getOrderPrice())));
+            ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/ordersEntity.getOrderPrice())));
             ratingEntity.setWaitersEntity(waitersEntity);
             ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
             ratingRepository.save(ratingEntity);
+        }else{
+            if(this.getRequirementsForTheFirstAward()<=waitersMissionEntity.getProgress()){
+                RatingEntity ratingEntity=new RatingEntity();
+                waitersEntity.setRating(waitersEntity.getRating()+Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/waitersMissionEntity.getProgress())));
+                ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/waitersMissionEntity.getProgress())));
+                ratingEntity.setWaitersEntity(waitersEntity);
+                ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
+                ratingRepository.save(ratingEntity);
+            }
         }
-        /*if(oldProgress>this.getRequirementsForTheFirstAward()){
-            waitersEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/((this.getRequirementsAmount()/(waitersMissionEntity.getProgress())-oldProgress))));
-            ratingEntity.setRating(waitersEntity.getRating()+(this.getAmountReward()/((this.getRequirementsAmount()/(waitersMissionEntity.getProgress())-oldProgress))));
-            ratingEntity.setWaitersEntity(waitersEntity);
-            ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
-        }*/
+
         waitersRepository.save(waitersEntity);
         waitersMissionRepository.save(waitersMissionEntity);
     }

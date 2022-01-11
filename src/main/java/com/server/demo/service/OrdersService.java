@@ -76,7 +76,6 @@ public class OrdersService {
 
     public Orders ordersCompleted(Long id) throws OrderNotFoundException {
         OrdersEntity ordersEntity=ordersRepository.findById(id).get();
-        RatingEntity ratingEntity = new RatingEntity();
         if(ordersEntity==null){
             throw new OrderNotFoundException("Заказ не найден");
         }
@@ -88,7 +87,7 @@ public class OrdersService {
         }
         if(ordersEntity.isOrderStatus()){
             achievementsService.checkAllAchievements(ordersEntity);
-            missionService.checkAllMissions(ordersEntity,ratingEntity);
+            missionService.checkAllMissions(ordersEntity);
         }
         return Orders.toModel(ordersRepository.save(ordersEntity));
 

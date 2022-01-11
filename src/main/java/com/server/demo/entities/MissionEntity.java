@@ -1,6 +1,9 @@
 package com.server.demo.entities;
 
 
+import com.fasterxml.jackson.annotation.*;
+import com.server.demo.model.Mission;
+import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersMissionRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -36,11 +39,27 @@ public abstract class MissionEntity {
     @OneToMany(mappedBy = "mission")
     Set<WaitersMissionEntity> waitersMission;
 
-    abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository, WaitersRepository waitersRepository,RatingEntity ratingEntity,RatingRepository ratingRepository);
+    abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository,
+                                      WaitersRepository waitersRepository,RatingRepository ratingRepository, DishOrderRepository dishOrderRepository);
 
     public MissionEntity(){
 
     }
+
+    @JsonCreator
+    MissionEntity(@JsonProperty("name") String missionName,@JsonProperty("description") String missionDescription,
+                  @JsonProperty("prize") Long amountReward,@JsonProperty("personalPurpose") int requirementsForTheFirstAward,
+                  @JsonProperty("purpose") Long requirementsAmount,@JsonProperty("deadline") Date deadlineTime,
+                  @JsonProperty("creationDate") Date dateOfCreation) {
+        this.missionName = missionName;
+        this.missionDescription=missionDescription;
+        this.amountReward=amountReward;
+        this.requirementsForTheFirstAward=requirementsForTheFirstAward;
+        this.requirementsAmount=requirementsAmount;
+        this.deadlineTime=deadlineTime;
+        this.dateOfCreation=dateOfCreation;
+    }
+
 
     public Long getId() {
         return id;

@@ -2,6 +2,7 @@ package com.server.demo.entities;
 
 
 import com.server.demo.repositories.AchievementsRepository;
+import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public abstract class AchievementsEntity{
     public AchievementsEntity(){
 
     }
-    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository,WaitersRepository waitersRepository);
+    abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository,
+                                       WaitersRepository waitersRepository, DishOrderRepository dishOrderRepository);
 
 
 
