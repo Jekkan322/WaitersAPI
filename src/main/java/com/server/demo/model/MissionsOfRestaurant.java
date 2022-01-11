@@ -8,6 +8,7 @@ public class MissionsOfRestaurant {
     private String name;
     private int progress;
 
+
     @JsonFormat(pattern="dd.MM.yyyy")
     private Date deadLine;
     private int purpose;
@@ -16,8 +17,8 @@ public class MissionsOfRestaurant {
 
     }
 
-    public MissionsOfRestaurant(String mission, int progress, Date deadLine,int purpose) {
-        this.name = mission;
+    public MissionsOfRestaurant(String name, int progress, Date deadLine,int purpose) {
+        this.name = name;
         this.progress = progress;
         this.deadLine = deadLine;
         this.purpose=purpose;
