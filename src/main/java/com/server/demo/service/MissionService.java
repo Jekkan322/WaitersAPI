@@ -61,7 +61,7 @@ public class MissionService {
 
     public List<MissionsOfRestaurant> getAllMission(){
         List<MissionsOfRestaurant> statistics=new ArrayList<>();
-
+        return statistics;
     }
 
     public Long deleteMission(Long id){
