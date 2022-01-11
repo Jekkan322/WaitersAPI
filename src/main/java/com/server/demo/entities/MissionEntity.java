@@ -16,7 +16,7 @@ import java.util.Set;
 @Inheritance
 @DiscriminatorColumn(name="missionType")
 @Table(name="mission")
-public abstract class MissionEntity {
+public abstract class MissionEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

@@ -44,17 +44,21 @@ public class MissionService {
         return Mission.toModel(missionRepository.save(missionEntity));
     }
 
-    public List<Restaurant> allMissions(){
-        List<Restaurant> result =new ArrayList<>();
+    public Restaurant allMissions(){
+        Restaurant result =new Restaurant();
+        List<MissionsOfRestaurant> statistics=new ArrayList<>();
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                result.add(new Restaurant("Чужая компания",new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue())));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                result.add(new Restaurant("Чужая компания",new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue())));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+
             }
         }
+        result.setName("Чужая компания");
+        result.setStatistics(statistics);
         return result;
     }
 

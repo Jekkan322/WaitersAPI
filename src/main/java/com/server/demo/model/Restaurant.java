@@ -1,14 +1,18 @@
 package com.server.demo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Restaurant {
     private String name;
-    private MissionsOfRestaurant statistics;
+    private List<MissionsOfRestaurant> statistics;
 
     public Restaurant(){
 
     }
 
-    public Restaurant(String name, MissionsOfRestaurant statistics) {
+    public Restaurant(String name, List<MissionsOfRestaurant> statistics) {
+        statistics=new ArrayList<>();
         this.name = name;
         this.statistics=statistics;
     }
@@ -21,11 +25,11 @@ public class Restaurant {
         this.name = name;
     }
 
-    public MissionsOfRestaurant getStatistics() {
+    public List<MissionsOfRestaurant> getStatistics() {
         return statistics;
     }
 
-    public void setStatistics(MissionsOfRestaurant statistics) {
+    public void setStatistics(List<MissionsOfRestaurant> statistics) {
         this.statistics = statistics;
     }
 }
