@@ -5,8 +5,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class DateForUpdate {
+    @JsonFormat(timezone = "GMT+5")
     private Date personal;
+    @JsonFormat(timezone = "GMT+5")
     private Date restaurant;
+    @JsonFormat(timezone = "GMT+5")
     private Date leaderboard;
 
     public DateForUpdate(){
