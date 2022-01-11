@@ -21,7 +21,7 @@ public class MissionForMobile {
         MissionForMobile model= new MissionForMobile();
         model.setName(missionEntity.getMissionName());
         model.setDescription(missionEntity.getMissionDescription());
-        model.setPrize(missionEntity.getAmountReward()/missionEntity.getRequirementsForTheFirstAward());
+        model.setPrize(Math.round(1.0*missionEntity.getAmountReward()/(1.0*missionEntity.getRequirementsAmount()/missionEntity.getRequirementsForTheFirstAward())));
         model.setPurpose(missionEntity.getRequirementsForTheFirstAward());
         model.setProgress(waitersMissionEntity.getProgress());
         if(waitersMissionEntity.getProgress()>=missionEntity.getRequirementsAmount()){
