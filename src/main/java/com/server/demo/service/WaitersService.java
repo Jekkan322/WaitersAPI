@@ -39,6 +39,11 @@ public class WaitersService {
         return waiters.stream().map(Waiters::toModel).collect(Collectors.toList());
     }
 
+    public Waiters getWaiter(Long id){
+        WaitersEntity waitersEntity=waitersRepository.findById(id).get();
+        return Waiters.toModel(waitersEntity);
+    }
+
     public List<Waiters> getAllWaiters(){
         Iterable<WaitersEntity> waiters= waitersRepository.findAll();
         List<WaitersEntity> resultEntity=new ArrayList<>();

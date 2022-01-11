@@ -1,14 +1,9 @@
 package com.server.demo.model;
 
-import com.server.demo.entities.WaitersAchievementsEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.demo.entities.WaitersEntity;
 
-import javax.persistence.Basic;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
-import java.util.Set;
 
 public class Waiters {
     private Long id;
@@ -19,9 +14,10 @@ public class Waiters {
     private String fullName;
 
     private String position;
-    private Long rating;
+    private Long totalScores;
 
-    private java.util.Date dateOfEntry;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private java.util.Date employmentDate;
 
     public static Waiters toModel(WaitersEntity waitersEntity){
         Waiters model=new Waiters();
@@ -31,20 +27,20 @@ public class Waiters {
         model.setMiddleName(waitersEntity.getMiddleName());
         model.setFullName(waitersEntity.getLastName()+ " " + waitersEntity.getFirstName()+ " " + waitersEntity.getMiddleName());
         model.setPosition(waitersEntity.getPosition());
-        model.setRating(waitersEntity.getRating());
-        model.setDateOfEntry(waitersEntity.getDateOfEntry());
+        model.setTotalScores(waitersEntity.getRating());
+        model.setEmploymentDate(waitersEntity.getDateOfEntry());
         return model;
     }
 
     public Waiters() {
     }
 
-    public Date getDateOfEntry() {
-        return dateOfEntry;
+    public Date getEmploymentDate() {
+        return employmentDate;
     }
 
-    public void setDateOfEntry(Date dateOfEntry) {
-        this.dateOfEntry = dateOfEntry;
+    public void setEmploymentDate(Date employmentDate) {
+        this.employmentDate = employmentDate;
     }
 
     public Long getId() {
@@ -95,11 +91,11 @@ public class Waiters {
         this.position = position;
     }
 
-    public Long getRating() {
-        return rating;
+    public Long getTotalScores() {
+        return totalScores;
     }
 
-    public void setRating(Long rating) {
-        this.rating = rating;
+    public void setTotalScores(Long totalScores) {
+        this.totalScores = totalScores;
     }
 }

@@ -31,4 +31,13 @@ public class MissionController {
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }
+
+    @DeleteMapping("mission/delete/{id}")
+    public ResponseEntity deleteMission(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(missionService.deleteMission(id));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
 }

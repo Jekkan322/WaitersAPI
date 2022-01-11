@@ -24,6 +24,15 @@ public class WaiterController {
         }
     }
 
+    @GetMapping("waiters/{id}")
+    public ResponseEntity findWaiter(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(waitersService.getWaiter(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Произошла ошибка");
+        }
+    }
+
     @GetMapping("/waiters/all")
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getAllWaiters(){

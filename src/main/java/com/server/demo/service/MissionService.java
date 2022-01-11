@@ -59,6 +59,12 @@ public class MissionService {
         return Mission.toModel(missionRepository.save(missionEntity));
     }
 
+    public Long deleteMission(Long id){
+        MissionEntity missionEntity=missionRepository.findById(id).get();
+        missionRepository.deleteById(missionEntity.getId());
+        return id;
+    }
+
     public Restaurant allMissions(){
         Restaurant result =new Restaurant();
         List<MissionsOfRestaurant> statistics=new ArrayList<>();
