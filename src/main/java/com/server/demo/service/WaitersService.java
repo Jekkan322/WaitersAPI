@@ -67,7 +67,7 @@ public class WaitersService {
         waitersEntity.setFirstName(waiters.getFirstName());
         waitersEntity.setLastName(waiters.getLastName());
         waitersEntity.setMiddleName(waiters.getMiddleName());
-        waitersEntity.setPosition(waiters.getPos());
+        waitersEntity.setPosition(waiters.getPosition());
         waitersEntity.setRating(waiters.getTotalScores());
         waitersEntity.setDateOfEntry(waiters.getEmploymentDate());
         return Waiters.toModel(waitersRepository.save(waitersEntity));

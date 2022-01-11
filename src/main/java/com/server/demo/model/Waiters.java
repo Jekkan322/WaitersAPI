@@ -13,7 +13,7 @@ public class Waiters {
     private String middleName;
     private String fullName;
 
-    private String pos;
+    private String position;
     private Long totalScores;
 
     @JsonFormat(pattern = "dd.MM.yyyy")
@@ -26,7 +26,7 @@ public class Waiters {
         model.setLastName(waitersEntity.getLastName());
         model.setMiddleName(waitersEntity.getMiddleName());
         model.setFullName(waitersEntity.getLastName()+ " " + waitersEntity.getFirstName()+ " " + waitersEntity.getMiddleName());
-        model.setPos(waitersEntity.getPosition());
+        model.setPosition(waitersEntity.getPosition());
         model.setTotalScores(waitersEntity.getRating());
         model.setEmploymentDate(waitersEntity.getDateOfEntry());
         return model;
@@ -83,12 +83,12 @@ public class Waiters {
         this.fullName = fullName;
     }
 
-    public String getPos() {
-        return pos;
+    public String getPosition() {
+        return position;
     }
 
-    public void setPos(String pos) {
-        this.pos = pos;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public Long getTotalScores() {
