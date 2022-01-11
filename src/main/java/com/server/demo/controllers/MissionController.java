@@ -42,7 +42,7 @@ public class MissionController {
         }
     }
 
-    @PutMapping("mission/update/")
+    @PutMapping("mission/update")
     public ResponseEntity updateMission(@RequestBody Mission mission){
         try{
             return ResponseEntity.ok(missionService.updateWaiters(mission));

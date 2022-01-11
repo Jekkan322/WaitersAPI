@@ -2,6 +2,7 @@ package com.server.demo.controllers;
 
 import com.server.demo.entities.WaitersEntity;
 import com.server.demo.exception.WaiterNotFoundException;
+import com.server.demo.model.Waiters;
 import com.server.demo.service.WaitersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,10 +53,10 @@ public class WaiterController {
         }
     }
 
-    @PutMapping("/waiters/put/{id}")
-    public ResponseEntity updateWaiters(@PathVariable Long id,@RequestBody WaitersEntity waitersEntity){
+    @PutMapping("/waiters/put")
+    public ResponseEntity updateWaiters(@RequestBody Waiters waiters){
         try{
-            return ResponseEntity.ok(waitersService.updateWaiters(id,waitersEntity));
+            return ResponseEntity.ok(waitersService.updateWaiters(waiters));
         }catch (WaiterNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){

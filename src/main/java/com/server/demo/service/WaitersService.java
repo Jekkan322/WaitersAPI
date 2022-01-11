@@ -52,23 +52,25 @@ public class WaitersService {
     }
 
     public Waiters createWaiters(WaitersEntity waitersEntity){
+        if(waitersEntity.getRating()==null){
+            waitersEntity.setRating(0l);
+        }
         WaitersEntity waiter= waitersRepository.save(waitersEntity);
         return Waiters.toModel(waiter);
     }
 
-    public Waiters updateWaiters(Long id,WaitersEntity waitersEntity) throws WaiterNotFoundException {
-        WaitersEntity waiters = waitersRepository.findById(id).get();
+    public Waiters updateWaiters(Waiters waiters) throws WaiterNotFoundException {
+        WaitersEntity waitersEntity = waitersRepository.findById(waiters.getId()).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        waiters.setFirstName(waitersEntity.getFirstName());
-        waiters.setLastName(waitersEntity.getLastName());
-        waiters.setMiddleName(waitersEntity.getMiddleName());
-        waiters.setPosition(waitersEntity.getPosition());
-        waiters.setRating(waitersEntity.getRating());
-        waiters.setDateOfEntry(waitersEntity.getDateOfEntry());
-        waiters.setWaitersAchievements(waitersEntity.getWaitersAchievements());
-        return Waiters.toModel(waitersRepository.save(waiters));
+        waitersEntity.setFirstName(waiters.getFirstName());
+        waitersEntity.setLastName(waiters.getLastName());
+        waitersEntity.setMiddleName(waiters.getMiddleName());
+        waitersEntity.setPosition(waiters.getPos());
+        waitersEntity.setRating(waiters.getTotalScores());
+        waitersEntity.setDateOfEntry(waiters.getEmploymentDate());
+        return Waiters.toModel(waitersRepository.save(waitersEntity));
     }
 
     public Long deleteWaiter(Long id) throws WaiterNotFoundException {
