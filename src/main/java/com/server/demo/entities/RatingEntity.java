@@ -1,5 +1,7 @@
 package com.server.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class RatingEntity {
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(timezone = "GMT+5")
     private java.util.Date timeOfReceipt;
 
     @ManyToOne

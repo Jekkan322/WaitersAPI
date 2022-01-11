@@ -36,6 +36,7 @@ public class OrdersEntity {
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(timezone = "GMT+5")
     private java.util.Date orderTime;
 
     @OneToMany(mappedBy = "orders")

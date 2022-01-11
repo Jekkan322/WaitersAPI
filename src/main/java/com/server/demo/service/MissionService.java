@@ -61,6 +61,15 @@ public class MissionService {
 
     public List<MissionsOfRestaurant> getAllMission(){
         List<MissionsOfRestaurant> statistics=new ArrayList<>();
+        for(MissionEntity missionEntity:missionRepository.findAll()){
+            Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
+            if(progress==null){
+                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+            }
+            else {
+                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+            }
+        }
         return statistics;
     }
 
@@ -80,7 +89,6 @@ public class MissionService {
             }
             else {
                 statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
-
             }
         }
         result.setName("Чужая компания");

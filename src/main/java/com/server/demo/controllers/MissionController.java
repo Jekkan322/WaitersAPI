@@ -32,6 +32,15 @@ public class MissionController {
         }
     }
 
+    @GetMapping("mission/getAll")
+    public ResponseEntity getAllMissions(){
+        try{
+            return ResponseEntity.ok(missionService.getAllMission() );
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
     @DeleteMapping("mission/delete/{id}")
     public ResponseEntity deleteMission(@PathVariable Long id){
         try{
