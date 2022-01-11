@@ -2,6 +2,7 @@ package com.server.demo.controllers;
 
 import com.server.demo.entities.MissionEntity;
 import com.server.demo.entities.ProceedsMissionEntity;
+import com.server.demo.model.Mission;
 import com.server.demo.model.MissionForCreate;
 import com.server.demo.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,16 @@ public class MissionController {
     @GetMapping("mission/getAll")
     public ResponseEntity getAllMissions(){
         try{
-            return ResponseEntity.ok(missionService.getAllMission() );
+            return ResponseEntity.ok(missionService.getAllMission());
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
+    @PutMapping("mission/update/{id}")
+    public ResponseEntity updateMission(@PathVariable Long id,@RequestBody Mission mission){
+        try{
+            return ResponseEntity.ok(missionService.updateWaiters(id,mission));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }

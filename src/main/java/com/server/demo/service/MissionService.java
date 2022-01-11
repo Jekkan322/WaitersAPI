@@ -1,14 +1,9 @@
 package com.server.demo.service;
 
-import com.server.demo.entities.GoListMissionEntity;
-import com.server.demo.entities.MissionEntity;
-import com.server.demo.entities.OrdersEntity;
-import com.server.demo.entities.ProceedsMissionEntity;
+import com.server.demo.entities.*;
 import com.server.demo.exception.MissionTypeNotFoundException;
-import com.server.demo.model.Mission;
-import com.server.demo.model.MissionForCreate;
-import com.server.demo.model.Restaurant;
-import com.server.demo.model.MissionsOfRestaurant;
+import com.server.demo.exception.WaiterNotFoundException;
+import com.server.demo.model.*;
 import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +66,17 @@ public class MissionService {
             }
         }
         return statistics;
+    }
+
+    public Mission updateWaiters(Long id, Mission mission){
+        MissionEntity missionEntity = missionRepository.findById(id).get();
+        missionEntity.setMissionName(mission.getMissionName());
+        missionEntity.setMissionDescription(mission.getMissionDescription());
+        missionEntity.setAmountReward(mission.getAmountReward());
+        missionEntity.setDeadlineTime(mission.getDeadlineTime());
+        missionEntity.setRequirementsAmount(mission.getAmountReward());
+        missionEntity.setRequirementsForTheFirstAward(mission.getRequirementsForTheFirstAward());
+        return Mission.toModel(missionRepository.save(missionEntity));
     }
 
     public Long deleteMission(Long id){

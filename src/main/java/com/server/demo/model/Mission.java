@@ -14,7 +14,7 @@ public class Mission {
 
     private String missionName;
     private String missionDescription;
-
+    private int requirementsForTheFirstAward;
     private Long amountReward;
 
     @Basic
@@ -34,6 +34,7 @@ public class Mission {
         model.setAmountReward(missionEntity.getAmountReward());
         model.setDeadlineTime(missionEntity.getDeadlineTime());
         model.setDateOfCreation(missionEntity.getDateOfCreation());
+        model.setRequirementsForTheFirstAward(missionEntity.getRequirementsForTheFirstAward());
         return model;
     }
 
@@ -89,4 +90,11 @@ public class Mission {
         this.dateOfCreation = dateOfCreation;
     }
 
+    public int getRequirementsForTheFirstAward() {
+        return requirementsForTheFirstAward;
+    }
+
+    public void setRequirementsForTheFirstAward(int requirementsForTheFirstAward) {
+        this.requirementsForTheFirstAward = requirementsForTheFirstAward;
+    }
 }
