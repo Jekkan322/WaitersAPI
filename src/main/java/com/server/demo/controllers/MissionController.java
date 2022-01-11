@@ -42,10 +42,10 @@ public class MissionController {
         }
     }
 
-    @PutMapping("mission/update/{id}")
-    public ResponseEntity updateMission(@PathVariable Long id,@RequestBody Mission mission){
+    @PutMapping("mission/update/")
+    public ResponseEntity updateMission(@RequestBody Mission mission){
         try{
-            return ResponseEntity.ok(missionService.updateWaiters(id,mission));
+            return ResponseEntity.ok(missionService.updateWaiters(mission));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
