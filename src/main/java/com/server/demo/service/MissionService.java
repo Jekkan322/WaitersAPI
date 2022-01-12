@@ -40,6 +40,11 @@ public class MissionService {
         }
     }
 
+    public Mission getMission(Long id){
+        MissionEntity missionEntity=missionRepository.findById(id).get();
+        return Mission.toModel(missionEntity);
+    }
+
     public Mission createMission(MissionForCreate missionForCreate) throws MissionTypeNotFoundException {
         if(missionForCreate.getDateOfCreation()==null){
             missionForCreate.setDateOfCreation(Date.from(ZonedDateTime.now().toInstant()));
