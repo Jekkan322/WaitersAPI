@@ -5,6 +5,9 @@ public class Statistics {
     private int goList;
     private int orders;
     private int rating;
+    private String firstName;
+    private String lastName;
+
 
     public Statistics(){
 
@@ -40,5 +43,21 @@ public class Statistics {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }

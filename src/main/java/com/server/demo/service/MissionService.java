@@ -153,6 +153,8 @@ public class MissionService {
             }else{
                 result.setGoList(dishOrderRepository.goListCount(date,waiters.getId()));
             }
+            result.setFirstName(waiters.getFirstName());
+            result.setLastName(waiters.getLastName());
             statistics.add(result);
 
         }
