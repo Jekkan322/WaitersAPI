@@ -9,6 +9,7 @@ public class Achievements {
     private int progress;
     private int level;
     private int purpose;
+    private String ImageUrl;
 
     public Achievements(){
 
@@ -19,6 +20,7 @@ public class Achievements {
         model.setDescription(waitersAchievementsEntity.getAchievements().getDescriptionAchievement());
         model.setLevel(waitersAchievementsEntity.getLevel());
         model.setProgress(waitersAchievementsEntity.getProgress());
+        model.setImageUrl(waitersAchievementsEntity.getAchievements().getPictureURL());
         model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()*(waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getAchievements().getIncreasingAmountWithNewLevel())));
         return model;
     }
@@ -61,5 +63,13 @@ public class Achievements {
 
     public void setPurpose(int purpose) {
         this.purpose = purpose;
+    }
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
     }
 }

@@ -23,6 +23,7 @@ public abstract class AchievementsEntity{
     private String descriptionAchievement;
     private int requiredInitialAmount;
     private int increasingAmountWithNewLevel;
+    private String pictureURL;
     /*private Long initialReward;
     private Long increasingRewardWithNewLevel;*/
 
@@ -84,5 +85,13 @@ public abstract class AchievementsEntity{
 
     public void setDescriptionAchievement(String descriptionAchievement) {
         this.descriptionAchievement = descriptionAchievement;
+    }
+
+    public String getPictureURL() {
+        return pictureURL;
+    }
+
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 }
