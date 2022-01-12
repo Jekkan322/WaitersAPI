@@ -15,6 +15,7 @@ import com.server.demo.pojo.MessageResponse;
 import com.server.demo.pojo.SignupRequest;
 import com.server.demo.repositories.RoleRepository;
 import com.server.demo.repositories.UserRepository;
+import com.server.demo.repositories.WaitersRepository;
 import com.server.demo.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,30 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    WaitersRepository waitersRepository;
 
+    @PostMapping("/waiter")
+    public ResponseEntity authWaiter(@RequestBody LoginRequest loginRequest){
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        Long waiter=userRespository.getById(userDetails.getId()).getWaiters().getId();
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                roles,waiter));
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
@@ -72,7 +96,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles));
+                roles,null));
     }
 
     @PostMapping("/signup")
@@ -115,6 +139,11 @@ public class AuthController {
                 });
             }
             user.setRoles(roles);
+            if(waitersRepository.findById(signupRequest.getWaiterId()).get()==null){
+                user.setWaiters(null);
+            }else{
+                user.setWaiters(waitersRepository.findById(signupRequest.getWaiterId()).get());
+            }
             userRespository.save(user);
             return ResponseEntity.ok(new MessageResponse("User CREATED"));
         }catch (Exception e){

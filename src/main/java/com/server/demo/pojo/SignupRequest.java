@@ -8,6 +8,7 @@ public class SignupRequest {
     private String username;
     private Set<String> roles;
     private String password;
+    private Long waiterId;
     public String getUsername() {
         return username;
     }
@@ -27,4 +28,11 @@ public class SignupRequest {
         this.password = password;
     }
 
+    public Long getWaiterId() {
+        return waiterId;
+    }
+
+    public void setWaiterId(Long waiterId) {
+        this.waiterId = waiterId;
+    }
 }

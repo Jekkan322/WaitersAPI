@@ -71,4 +71,12 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public WaitersEntity getWaiters() {
+        return waiters;
+    }
+
+    public void setWaiters(WaitersEntity waiters) {
+        this.waiters = waiters;
+    }
 }
