@@ -4,10 +4,7 @@ package com.server.demo.entities;
 import com.fasterxml.jackson.annotation.*;
 import com.server.demo.model.Mission;
 import com.server.demo.model.MissionForCreate;
-import com.server.demo.repositories.DishOrderRepository;
-import com.server.demo.repositories.RatingRepository;
-import com.server.demo.repositories.WaitersMissionRepository;
-import com.server.demo.repositories.WaitersRepository;
+import com.server.demo.repositories.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -42,6 +39,8 @@ public abstract class MissionEntity{
 
     abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository,
                                       WaitersRepository waitersRepository,RatingRepository ratingRepository, DishOrderRepository dishOrderRepository);
+
+    abstract public Integer calcProgress(Date date, OrdersRepository ordersRepository,DishOrderRepository dishOrderRepository);
 
     public MissionEntity(){
 

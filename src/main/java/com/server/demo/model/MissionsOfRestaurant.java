@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class MissionsOfRestaurant {
+    private Long id;
     private String name;
     private int progress;
 
@@ -17,11 +18,20 @@ public class MissionsOfRestaurant {
 
     }
 
-    public MissionsOfRestaurant(String name, int progress, Date deadLine,int purpose) {
+    public MissionsOfRestaurant(Long id,String name, int progress, Date deadLine,int purpose) {
+        this.id=id;
         this.name = name;
         this.progress = progress;
         this.deadLine = deadLine;
         this.purpose=purpose;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

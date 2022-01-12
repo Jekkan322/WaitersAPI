@@ -15,4 +15,7 @@ public interface DishOrderRepository extends CrudRepository<DishOrderEntity,Long
     @Query("select sum(amountDishes) from DishOrderEntity WHERE goList=true and orders.id=?1")
     Integer goListOrder(Long ordersId);
 
+    @Query("select sum(amountDishes) from DishOrderEntity WHERE goList=true and orders.orderTime>?1")
+    Integer sumGoList(Date date);
+
 }

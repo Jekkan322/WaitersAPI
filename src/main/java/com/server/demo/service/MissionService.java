@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class MissionService {
     @Autowired
     DishOrderRepository dishOrderRepository;
 
+    @Autowired
+    OrdersRepository ordersRepository;
+
     public void checkAllMissions(OrdersEntity ordersEntity){
         for(MissionEntity missionEntity:missionRepository.findAll()){
             missionEntity.processOrder(ordersEntity,waitersMissionRepository,waitersRepository,ratingRepository,dishOrderRepository);
@@ -48,6 +52,9 @@ public class MissionService {
             case "goList":
                 missionEntity=new GoListMissionEntity(missionForCreate);
                 break;
+            case "orderClosed":
+                missionEntity=new OrdersClosedMissionEntity(missionForCreate);
+                break;
             default:
                 throw new MissionTypeNotFoundException("Данного типа миссии не существует");
         }
@@ -59,10 +66,10 @@ public class MissionService {
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
         return statistics;
@@ -91,15 +98,72 @@ public class MissionService {
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                statistics.add(new MissionsOfRestaurant(missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
         result.setName("Чужая компания");
         result.setStatistics(statistics);
         return result;
+    }
+
+    public StatisticsForWeb statisticsWeb(String filter) throws MissionTypeNotFoundException {
+        Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateNow);
+        switch (filter){
+            case("day"):
+                calendar.add(Calendar.DAY_OF_MONTH,-1);
+                break;
+            case("week"):
+                calendar.add(Calendar.WEEK_OF_MONTH,-1);
+                break;
+            case("month"):
+                calendar.add(Calendar.MONTH,-1);
+                break;
+        }
+        Date date=calendar.getTime();
+        List<Statistics> statistics=new ArrayList<>();
+        List<MissionsOfRestaurant> missions=new ArrayList<>();
+        for(WaitersEntity waiters:waitersRepository.findAll()){
+            Statistics result=new Statistics();
+            Integer orders=ordersRepository.countClosedOrders(date,waiters.getId());
+            if(orders==null){
+                result.setOrders(0);
+            }
+            else{
+                result.setOrders(orders);
+            }
+            Long rating=ratingRepository.filterAllRating(date,waiters.getId());
+            if(rating==null){
+                result.setRating(0);
+            }else{
+                result.setRating(rating.intValue());
+            }
+            Integer revenue=ordersRepository.waiterRevenue(date,waiters.getId());
+            if(revenue==null){
+                result.setRevenue(0);
+            }else{
+                result.setRevenue(revenue);
+            }
+            if(dishOrderRepository.goListCount(date,waiters.getId())==null){
+                result.setGoList(0);
+            }else{
+                result.setGoList(dishOrderRepository.goListCount(date,waiters.getId()));
+            }
+            statistics.add(result);
+
+        }
+        int progress=0;
+        for(MissionEntity missionEntity:missionRepository.findAll()){
+            progress=missionEntity.calcProgress(date,ordersRepository,dishOrderRepository);
+            missions.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+        }
+        return new StatisticsForWeb(statistics,missions);
+
+
     }
 
 

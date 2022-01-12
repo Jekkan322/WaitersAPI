@@ -59,4 +59,13 @@ public class MissionController {
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }
+
+    @GetMapping("mission/statistics")
+    public ResponseEntity getStatistics(@RequestParam String filter){
+        try{
+            return ResponseEntity.ok(missionService.statisticsWeb(filter));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
 }

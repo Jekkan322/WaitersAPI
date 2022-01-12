@@ -1,10 +1,7 @@
 package com.server.demo.entities;
 
 import com.server.demo.model.MissionForCreate;
-import com.server.demo.repositories.DishOrderRepository;
-import com.server.demo.repositories.RatingRepository;
-import com.server.demo.repositories.WaitersMissionRepository;
-import com.server.demo.repositories.WaitersRepository;
+import com.server.demo.repositories.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -61,6 +58,15 @@ public class ProceedsMissionEntity extends MissionEntity{
 
         waitersRepository.save(waitersEntity);
         waitersMissionRepository.save(waitersMissionEntity);
+    }
+
+    @Override
+    public Integer calcProgress(Date date, OrdersRepository ordersRepository, DishOrderRepository dishOrderRepository) {
+        Integer result=ordersRepository.sumRevenue(date);
+        if(result==null){
+            result=0;
+        }
+        return result;
     }
 
     public ProceedsMissionEntity(MissionForCreate missionForCreate){

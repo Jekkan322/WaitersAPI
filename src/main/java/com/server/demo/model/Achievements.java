@@ -19,7 +19,7 @@ public class Achievements {
         model.setDescription(waitersAchievementsEntity.getAchievements().getDescriptionAchievement());
         model.setLevel(waitersAchievementsEntity.getLevel());
         model.setProgress(waitersAchievementsEntity.getProgress());
-        model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()+1)*(waitersAchievementsEntity.getLevel()+1)*waitersAchievementsEntity.getAchievements().getIncreasingAmountWithNewLevel());
+        model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()*(waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getAchievements().getIncreasingAmountWithNewLevel())));
         return model;
     }
 
