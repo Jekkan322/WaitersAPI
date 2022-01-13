@@ -45,7 +45,7 @@ public class WaiterController {
     }
 
     @PostMapping("/waiters/add")
-    public ResponseEntity addWaiters(@RequestBody WaitersEntity waitersEntity){
+    public ResponseEntity addWaiters(@RequestBody Waiters waitersEntity){
         try{
             return ResponseEntity.ok(waitersService.createWaiters(waitersEntity));
         }catch (Exception e){

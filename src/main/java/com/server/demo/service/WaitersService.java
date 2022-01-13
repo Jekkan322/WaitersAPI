@@ -51,12 +51,19 @@ public class WaitersService {
         return resultEntity.stream().map(Waiters::toModel).collect(Collectors.toList());
     }
 
-    public Waiters createWaiters(WaitersEntity waitersEntity){
-        if(waitersEntity.getRating()==null){
-            waitersEntity.setRating(0l);
+    public Waiters createWaiters(Waiters waiters){
+        if(waiters.getTotalScores()==null){
+            waiters.setTotalScores(0l);
         }
-        WaitersEntity waiter= waitersRepository.save(waitersEntity);
-        return Waiters.toModel(waiter);
+        WaitersEntity waitersEntity=new WaitersEntity();
+        waitersEntity.setRating(waiters.getTotalScores());
+        waitersEntity.setPosition(waiters.getPosition());
+        waitersEntity.setFirstName(waiters.getFirstName());
+        waitersEntity.setLastName(waiters.getLastName());
+        waitersEntity.setMiddleName(waiters.getMiddleName());
+        waitersEntity.setDateOfEntry(waiters.getEmploymentDate());
+        waitersRepository.save(waitersEntity);
+        return Waiters.toModel(waitersEntity);
     }
 
     public Waiters updateWaiters(Long id,Waiters waiters) throws WaiterNotFoundException {
