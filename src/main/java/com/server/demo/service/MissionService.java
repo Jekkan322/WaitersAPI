@@ -113,7 +113,7 @@ public class MissionService {
                 statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
-        result.setName("Чужая компания");
+        result.setName("Palo-alto restaurant");
         result.setStatistics(statistics);
         return result;
     }
