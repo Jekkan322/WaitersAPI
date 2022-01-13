@@ -59,8 +59,8 @@ public class WaitersService {
         return Waiters.toModel(waiter);
     }
 
-    public Waiters updateWaiters(Waiters waiters) throws WaiterNotFoundException {
-        WaitersEntity waitersEntity = waitersRepository.findById(waiters.getId()).get();
+    public Waiters updateWaiters(Long id,Waiters waiters) throws WaiterNotFoundException {
+        WaitersEntity waitersEntity = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }

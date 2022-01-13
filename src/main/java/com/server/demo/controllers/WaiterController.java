@@ -53,10 +53,10 @@ public class WaiterController {
         }
     }
 
-    @PutMapping("/waiters/put")
-    public ResponseEntity updateWaiters(@RequestBody Waiters waiters){
+    @PutMapping("/waiters/put/{id}")
+    public ResponseEntity updateWaiters(@PathVariable Long id,@RequestBody Waiters waiters){
         try{
-            return ResponseEntity.ok(waitersService.updateWaiters(waiters));
+            return ResponseEntity.ok(waitersService.updateWaiters(id,waiters));
         }catch (WaiterNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){

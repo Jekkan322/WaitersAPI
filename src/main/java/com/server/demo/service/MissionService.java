@@ -80,8 +80,8 @@ public class MissionService {
         return statistics;
     }
 
-    public Mission updateWaiters(Mission mission){
-        MissionEntity missionEntity = missionRepository.findById(mission.getId()).get();
+    public Mission updateWaiters(Long id,Mission mission){
+        MissionEntity missionEntity = missionRepository.findById(id).get();
         missionEntity.setMissionName(mission.getMissionName());
         missionEntity.setMissionDescription(mission.getMissionDescription());
         missionEntity.setAmountReward(mission.getAmountReward());
