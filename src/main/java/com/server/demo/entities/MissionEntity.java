@@ -34,7 +34,7 @@ public abstract class MissionEntity{
     @Temporal(TemporalType.DATE)
     private java.util.Date dateOfCreation;
 
-    @OneToMany(mappedBy = "mission")
+    @OneToMany(mappedBy = "mission",cascade = CascadeType.REMOVE)
     Set<WaitersMissionEntity> waitersMission;
 
     abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository,

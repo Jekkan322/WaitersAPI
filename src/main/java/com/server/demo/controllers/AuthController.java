@@ -2,6 +2,7 @@ package com.server.demo.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -101,17 +102,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+        boolean itsWaiter=false;
         try{
             if (userRespository.existsByUsername(signupRequest.getUsername())) {
                 return ResponseEntity
                         .badRequest()
                         .body(new MessageResponse("Error: Username is exist"));
             }
-
-
-            User user = new User(signupRequest.getUsername(),
-                    passwordEncoder.encode(signupRequest.getPassword()));
-
             Set<String> reqRoles = signupRequest.getRoles();
             Set<Role> roles = new HashSet<>();
 
@@ -120,6 +117,7 @@ public class AuthController {
                         .findByName(ERole.ROLE_WAITER)
                         .orElseThrow(() -> new RuntimeException("Error, Role waiter is not found"));
                 roles.add(userRole);
+                itsWaiter=true;
             } else {
                 reqRoles.forEach(r -> {
                     switch (r) {
@@ -135,15 +133,21 @@ public class AuthController {
                                     .findByName(ERole.ROLE_WAITER)
                                     .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
                             roles.add(userRole);
+
                     }
                 });
             }
-            user.setRoles(roles);
-            if(waitersRepository.findById(signupRequest.getWaiterId()).get()==null){
-                user.setWaiters(null);
-            }else{
-                user.setWaiters(waitersRepository.findById(signupRequest.getWaiterId()).get());
+
+            User user = new User();
+            if(itsWaiter){
+                user = new User(signupRequest.getUsername().toUpperCase(),
+                        passwordEncoder.encode(signupRequest.getPassword().toUpperCase()));
+            }else {
+                user = new User(signupRequest.getUsername(),
+                        passwordEncoder.encode(signupRequest.getPassword()));
             }
+            user.setRoles(roles);
+            user.setWaiters(waitersRepository.findById(signupRequest.getWaiterId()).get());
             userRespository.save(user);
             return ResponseEntity.ok(new MessageResponse("User CREATED"));
         }catch (Exception e){

@@ -93,6 +93,10 @@ public class MissionService {
 
     public Long deleteMission(Long id){
         MissionEntity missionEntity=missionRepository.findById(id).get();
+        /*List<WaitersMissionEntity> waitersMissionEntity=waitersMissionRepository.findByMissionId(id).get();
+        for(WaitersMissionEntity waitersMission:waitersMissionEntity){
+            waitersMissionRepository.delete(waitersMission);
+        }*/
         missionRepository.deleteById(missionEntity.getId());
         return id;
     }

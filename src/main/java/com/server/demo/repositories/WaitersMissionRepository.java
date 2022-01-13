@@ -7,14 +7,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface WaitersMissionRepository extends CrudRepository<WaitersMissionEntity,Long> {
 
     Optional<WaitersMissionEntity> findByWaitersAndMission(WaitersEntity waiters, MissionEntity missionEntity);
-    Optional<WaitersMissionEntity> findByMissionId(Long missionId);
-    Optional<WaitersMissionEntity> findByWaitersId(Long waitersId);
+    Optional<List<WaitersMissionEntity>> findByMissionId(Long missionId);
+    Optional<List<WaitersMissionEntity>> findByWaitersId(Long waitersId);
     Optional<WaitersMissionEntity> findByWaitersIdAndMissionId(Long waitersId, Long missionId);
 
     @Query("select u from WaitersMissionEntity u WHERE u.waiters.id=?1")
