@@ -16,7 +16,7 @@ public interface WaitersAchievementsRepository extends CrudRepository<WaitersAch
 
     Optional<WaitersAchievementsEntity> findByWaitersAndAchievements(WaitersEntity waiters, AchievementsEntity achievements);
     Collection<WaitersAchievementsEntity> findByWaiters(WaitersEntity waiters);
-    @Query("select u from WaitersAchievementsEntity u WHERE u.level>0 and u.waiters.id=?1")
+    @Query("select u from WaitersAchievementsEntity u WHERE u.progress>0 and u.waiters.id=?1")
     Collection<WaitersAchievementsEntity> filterWaiterByLevel(Long waitersId);
 
 
