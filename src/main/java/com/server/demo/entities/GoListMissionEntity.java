@@ -35,7 +35,7 @@ public class GoListMissionEntity extends MissionEntity{
         if(this.getDeadlineTime().after(Date.from(ZonedDateTime.now().toInstant()))){
             waitersMissionEntity.setProgress(waitersMissionEntity.getProgress()+goListAmount);
         }
-        if(oldProgress>=this.getRequirementsForTheFirstAward()){
+        if(oldProgress>=this.getPersonalMissionAmount()){
             RatingEntity ratingEntity=new RatingEntity();
             waitersEntity.setRating(waitersEntity.getRating()+Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount()/goListAmount)));
             ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/goListAmount)));
@@ -43,7 +43,7 @@ public class GoListMissionEntity extends MissionEntity{
             ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
             ratingRepository.save(ratingEntity);
         }else{
-            if(this.getRequirementsForTheFirstAward()<=waitersMissionEntity.getProgress()){
+            if(this.getPersonalMissionAmount()<=waitersMissionEntity.getProgress()){
                 RatingEntity ratingEntity=new RatingEntity();
                 waitersEntity.setRating(waitersEntity.getRating()+Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/waitersMissionEntity.getProgress())));
                 ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/waitersMissionEntity.getProgress())));

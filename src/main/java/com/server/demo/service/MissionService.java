@@ -2,7 +2,6 @@ package com.server.demo.service;
 
 import com.server.demo.entities.*;
 import com.server.demo.exception.MissionTypeNotFoundException;
-import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.model.*;
 import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +70,10 @@ public class MissionService {
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
         return statistics;
@@ -82,12 +81,12 @@ public class MissionService {
 
     public Mission updateWaiters(Long id,Mission mission){
         MissionEntity missionEntity = missionRepository.findById(id).get();
-        missionEntity.setMissionName(mission.getMissionName());
-        missionEntity.setMissionDescription(mission.getMissionDescription());
+        missionEntity.setName(mission.getMissionName());
+        missionEntity.setDescription(mission.getMissionDescription());
         missionEntity.setAmountReward(mission.getAmountReward());
         missionEntity.setDeadlineTime(mission.getDeadlineTime());
         missionEntity.setRequirementsAmount(mission.getAmountReward());
-        missionEntity.setRequirementsForTheFirstAward(mission.getRequirementsForTheFirstAward());
+        missionEntity.setPersonalMissionAmount(mission.getRequirementsForTheFirstAward());
         return Mission.toModel(missionRepository.save(missionEntity));
     }
 
@@ -107,10 +106,10 @@ public class MissionService {
         for(MissionEntity missionEntity:missionRepository.findAll()){
             Integer progress= waitersMissionRepository.allProgress(missionEntity.getId());
             if(progress==null){
-                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),0,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
             else {
-                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+                statistics.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
             }
         }
         result.setName("Palo-alto restaurant");
@@ -170,7 +169,7 @@ public class MissionService {
         int progress=0;
         for(MissionEntity missionEntity:missionRepository.findAll()){
             progress=missionEntity.calcProgress(date,ordersRepository,dishOrderRepository);
-            missions.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getMissionName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+            missions.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
         }
         return new StatisticsForWeb(statistics,missions);
 

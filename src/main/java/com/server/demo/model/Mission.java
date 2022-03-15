@@ -2,7 +2,6 @@ package com.server.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.demo.entities.MissionEntity;
-import com.server.demo.entities.OrdersEntity;
 
 import javax.persistence.Basic;
 import javax.persistence.Temporal;
@@ -14,7 +13,7 @@ public class Mission {
 
     private String missionName;
     private String missionDescription;
-    private int requirementsForTheFirstAward;
+    private int personalMissionAmount;
     private Long amountReward;
     private Long requirementsAmount;
 
@@ -30,12 +29,12 @@ public class Mission {
     public static Mission toModel(MissionEntity missionEntity){
         Mission model= new Mission();
         model.setId(missionEntity.getId());
-        model.setMissionName(missionEntity.getMissionName());
-        model.setMissionDescription(missionEntity.getMissionName());
+        model.setMissionName(missionEntity.getName());
+        model.setMissionDescription(missionEntity.getName());
         model.setAmountReward(missionEntity.getAmountReward());
         model.setDeadlineTime(missionEntity.getDeadlineTime());
         model.setDateOfCreation(missionEntity.getDateOfCreation());
-        model.setRequirementsForTheFirstAward(missionEntity.getRequirementsForTheFirstAward());
+        model.setRequirementsForTheFirstAward(missionEntity.getPersonalMissionAmount());
         model.setRequirementsAmount(missionEntity.getRequirementsAmount());
         return model;
     }
@@ -93,11 +92,11 @@ public class Mission {
     }
 
     public int getRequirementsForTheFirstAward() {
-        return requirementsForTheFirstAward;
+        return personalMissionAmount;
     }
 
-    public void setRequirementsForTheFirstAward(int requirementsForTheFirstAward) {
-        this.requirementsForTheFirstAward = requirementsForTheFirstAward;
+    public void setRequirementsForTheFirstAward(int personalMissionAmount) {
+        this.personalMissionAmount = personalMissionAmount;
     }
 
     public Long getRequirementsAmount() {

@@ -1,11 +1,9 @@
 package com.server.demo.entities;
 
 
-import com.server.demo.repositories.AchievementsRepository;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,16 +11,16 @@ import java.util.Set;
 @Entity
 @Table(name="achievements")
 @Inheritance
-@DiscriminatorColumn(name="typeAchievement")
+@DiscriminatorColumn(name="type")
 public abstract class AchievementsEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nameAchievement;
-    private String descriptionAchievement;
+    private String name;
+    private String description;
     private int requiredInitialAmount;
-    private int increasingAmountWithNewLevel;
+    private int levelIncreaseFactor;
     private String pictureURL;
     /*private Long initialReward;
     private Long increasingRewardWithNewLevel;*/
@@ -46,12 +44,12 @@ public abstract class AchievementsEntity{
         this.requiredInitialAmount = requiredInitialAmount;
     }
 
-    public int getIncreasingAmountWithNewLevel() {
-        return increasingAmountWithNewLevel;
+    public int getLevelIncreaseFactor() {
+        return levelIncreaseFactor;
     }
 
-    public void setIncreasingAmountWithNewLevel(int increasingAmountWithNewLevel) {
-        this.increasingAmountWithNewLevel = increasingAmountWithNewLevel;
+    public void setLevelIncreaseFactor(int levelIncreaseFactor) {
+        this.levelIncreaseFactor = levelIncreaseFactor;
     }
 
 
@@ -71,20 +69,20 @@ public abstract class AchievementsEntity{
         this.id = id;
     }
 
-    public String getNameAchievement() {
-        return nameAchievement;
+    public String getName() {
+        return name;
     }
 
-    public void setNameAchievement(String nameAchievement) {
-        this.nameAchievement = nameAchievement;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescriptionAchievement() {
-        return descriptionAchievement;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionAchievement(String descriptionAchievement) {
-        this.descriptionAchievement = descriptionAchievement;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getPictureURL() {

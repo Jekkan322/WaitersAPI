@@ -16,12 +16,12 @@ public class Achievements {
     }
     public static Achievements toModel(WaitersAchievementsEntity waitersAchievementsEntity){
         Achievements model=new Achievements();
-        model.setName(waitersAchievementsEntity.getAchievements().getNameAchievement());
-        model.setDescription(waitersAchievementsEntity.getAchievements().getDescriptionAchievement());
+        model.setName(waitersAchievementsEntity.getAchievements().getName());
+        model.setDescription(waitersAchievementsEntity.getAchievements().getDescription());
         model.setLevel(waitersAchievementsEntity.getLevel());
         model.setProgress(waitersAchievementsEntity.getProgress());
         model.setImageUrl(waitersAchievementsEntity.getAchievements().getPictureURL());
-        model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()*(waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getAchievements().getIncreasingAmountWithNewLevel())));
+        model.setPurpose(waitersAchievementsEntity.getAchievements().getRequiredInitialAmount()+(waitersAchievementsEntity.getLevel()*(waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getAchievements().getLevelIncreaseFactor())));
         return model;
     }
 

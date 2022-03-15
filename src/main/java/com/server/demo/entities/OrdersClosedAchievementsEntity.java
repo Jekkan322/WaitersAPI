@@ -26,7 +26,7 @@ public class OrdersClosedAchievementsEntity extends AchievementsEntity{
             waitersAchievementsEntity.setAchievements(this);
         }
         waitersAchievementsEntity.setProgress(waitersAchievementsEntity.getProgress()+1);
-        while((waitersAchievementsEntity.getProgress())>=this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getLevel()*this.getIncreasingAmountWithNewLevel()) {
+        while((waitersAchievementsEntity.getProgress())>=this.getRequiredInitialAmount()+waitersAchievementsEntity.getLevel()*waitersAchievementsEntity.getLevel()*this.getLevelIncreaseFactor()) {
             waitersAchievementsEntity.setLevel(waitersAchievementsEntity.getLevel() + 1);
         }
         waitersRepository.save(waitersEntity);

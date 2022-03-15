@@ -30,18 +30,18 @@ public class OrdersClosedMissionEntity extends MissionEntity{
         if(this.getDeadlineTime().after(Date.from(ZonedDateTime.now().toInstant()))){
             waitersMissionEntity.setProgress(waitersMissionEntity.getProgress()+1);
         }
-        if(oldProgress>=this.getRequirementsForTheFirstAward()){
+        if(oldProgress>=this.getPersonalMissionAmount()){
             RatingEntity ratingEntity=new RatingEntity();
             waitersEntity.setRating(waitersEntity.getRating()+Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount()/1)));
-            ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount()/1)));
+            ratingEntity.setRating(Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount()/1)));
             ratingEntity.setWaitersEntity(waitersEntity);
             ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
             ratingRepository.save(ratingEntity);
         }else{
-            if(this.getRequirementsForTheFirstAward()<=waitersMissionEntity.getProgress()){
+            if(this.getPersonalMissionAmount()<=waitersMissionEntity.getProgress()){
                 RatingEntity ratingEntity=new RatingEntity();
-                waitersEntity.setRating(waitersEntity.getRating()+Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/this.getRequirementsForTheFirstAward())));
-                ratingEntity.setRating(Math.round(1.0*this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/this.getRequirementsForTheFirstAward())));
+                waitersEntity.setRating(waitersEntity.getRating()+Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/this.getPersonalMissionAmount())));
+                ratingEntity.setRating(Math.round(this.getAmountReward()/(1.0*this.getRequirementsAmount().intValue()/this.getPersonalMissionAmount())));
                 ratingEntity.setWaitersEntity(waitersEntity);
                 ratingEntity.setTimeOfReceipt(Date.from(ZonedDateTime.now().toInstant()));
                 ratingRepository.save(ratingEntity);

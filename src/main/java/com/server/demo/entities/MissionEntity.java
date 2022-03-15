@@ -1,8 +1,6 @@
 package com.server.demo.entities;
 
 
-import com.fasterxml.jackson.annotation.*;
-import com.server.demo.model.Mission;
 import com.server.demo.model.MissionForCreate;
 import com.server.demo.repositories.*;
 
@@ -12,18 +10,18 @@ import java.util.Set;
 
 @Entity
 @Inheritance
-@DiscriminatorColumn(name="missionType")
+@DiscriminatorColumn(name="type")
 @Table(name="mission")
 public abstract class MissionEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String missionName;
-    private String missionDescription;
+    private String name;
+    private String description;
 
     private Long amountReward;
-    private int requirementsForTheFirstAward;
+    private int personalMissionAmount;
     private Long requirementsAmount;
 
     @Basic
@@ -47,10 +45,10 @@ public abstract class MissionEntity{
     }
 
     public MissionEntity(MissionForCreate missionForCreate) {
-        this.missionName = missionForCreate.getMissionName();
-        this.missionDescription = missionForCreate.getMissionDescription();
+        this.name = missionForCreate.getMissionName();
+        this.description = missionForCreate.getMissionDescription();
         this.amountReward = missionForCreate.getAmountReward();
-        this.requirementsForTheFirstAward = missionForCreate.getRequirementsForTheFirstAward();
+        this.personalMissionAmount = missionForCreate.getRequirementsForTheFirstAward();
         this.requirementsAmount = missionForCreate.getRequirementsAmount();
         this.deadlineTime = missionForCreate.getDeadlineTime();
         this.dateOfCreation = missionForCreate.getDateOfCreation();
@@ -95,29 +93,29 @@ public abstract class MissionEntity{
         this.requirementsAmount = requirementsAmount;
     }
 
-    public String getMissionName() {
-        return missionName;
+    public String getName() {
+        return name;
     }
 
-    public void setMissionName(String missionName) {
-        this.missionName = missionName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMissionDescription() {
-        return missionDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMissionDescription(String missionDescription) {
-        this.missionDescription = missionDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
-    public int getRequirementsForTheFirstAward() {
-        return requirementsForTheFirstAward;
+    public int getPersonalMissionAmount() {
+        return personalMissionAmount;
     }
 
-    public void setRequirementsForTheFirstAward(int requirementsForTheFirstAward) {
-        this.requirementsForTheFirstAward = requirementsForTheFirstAward;
+    public void setPersonalMissionAmount(int personalMissionAmount) {
+        this.personalMissionAmount = personalMissionAmount;
     }
 
     public Set<WaitersMissionEntity> getWaitersMission() {

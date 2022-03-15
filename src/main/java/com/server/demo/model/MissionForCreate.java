@@ -13,7 +13,7 @@ public class MissionForCreate {
     private String missionDescription;
 
     private Long amountReward;
-    private int requirementsForTheFirstAward;
+    private int personalMissionAmount;
     private Long requirementsAmount;
 
     @JsonFormat(pattern="dd.MM.yyyy")
@@ -52,11 +52,11 @@ public class MissionForCreate {
     }
 
     public int getRequirementsForTheFirstAward() {
-        return requirementsForTheFirstAward;
+        return personalMissionAmount;
     }
 
-    public void setRequirementsForTheFirstAward(int requirementsForTheFirstAward) {
-        this.requirementsForTheFirstAward = requirementsForTheFirstAward;
+    public void setRequirementsForTheFirstAward(int personalMissionAmount) {
+        this.personalMissionAmount = personalMissionAmount;
     }
 
     public Long getRequirementsAmount() {

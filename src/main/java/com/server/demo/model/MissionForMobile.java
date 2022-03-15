@@ -19,10 +19,10 @@ public class MissionForMobile {
 
     public static MissionForMobile toModel(MissionEntity missionEntity, WaitersMissionEntity waitersMissionEntity){
         MissionForMobile model= new MissionForMobile();
-        model.setName(missionEntity.getMissionName());
-        model.setDescription(missionEntity.getMissionDescription());
-        model.setPrize(Math.round(1.0*missionEntity.getAmountReward()/(1.0*missionEntity.getRequirementsAmount()/missionEntity.getRequirementsForTheFirstAward())));
-        model.setPurpose(missionEntity.getRequirementsForTheFirstAward());
+        model.setName(missionEntity.getName());
+        model.setDescription(missionEntity.getDescription());
+        model.setPrize(Math.round(1.0*missionEntity.getAmountReward()/(1.0*missionEntity.getRequirementsAmount()/missionEntity.getPersonalMissionAmount())));
+        model.setPurpose(missionEntity.getPersonalMissionAmount());
         model.setProgress(waitersMissionEntity.getProgress());
         if(waitersMissionEntity.getProgress()>=missionEntity.getRequirementsAmount()){
             model.setCompleted(true);
