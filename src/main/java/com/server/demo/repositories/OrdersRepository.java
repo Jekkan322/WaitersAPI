@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Repository
 public interface OrdersRepository extends CrudRepository<OrdersEntity,Long> {
-    @Query("SELECT COUNT(waitersEntity.id) FROM OrdersEntity WHERE waitersEntity.id=?2 and orderTime>?1 and orderStatus=true")
+    @Query("SELECT COUNT(waiters.id) FROM OrdersEntity WHERE waiters.id=?2 and orderTime>?1 and orderStatus=true")
     Integer countClosedOrders(Date date, Long waitersId);
 
-    @Query("SELECT sum(orderPrice) FROM OrdersEntity WHERE waitersEntity.id=?2 and orderTime>?1 and orderStatus=true")
+    @Query("SELECT sum(orderPrice) FROM OrdersEntity WHERE waiters.id=?2 and orderTime>?1 and orderStatus=true")
     Integer waiterRevenue(Date date, Long waitersId);
 
-    @Query("select max(orderTime) from OrdersEntity where waitersEntity.id=?1 and orderStatus=true")
+    @Query("select max(orderTime) from OrdersEntity where waiters.id=?1 and orderStatus=true")
     Date lastOrderWaiter(Long waitersId);
 
     @Query("select max(orderTime) from OrdersEntity where orderStatus=true")

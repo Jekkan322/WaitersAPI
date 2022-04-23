@@ -52,7 +52,7 @@ public class WaiterController {
         }
     }
 
-    @PutMapping("/waiters/put/{id}")
+    @PutMapping("/waiters/change/{id}")
     public ResponseEntity updateWaiters(@PathVariable Long id,@RequestBody Waiters waiters){
         try{
             return ResponseEntity.ok(waitersService.updateWaiters(id,waiters));

@@ -27,8 +27,11 @@ public class OrdersEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /*@ManyToOne
+    private WaitersEntity waitersEntity;*/
+
     @ManyToOne
-    private WaitersEntity waitersEntity;
+    private WaitersEntity waiters;
 
 
     private int orderPrice;
@@ -80,11 +83,11 @@ public class OrdersEntity {
     }
 
     public WaitersEntity getWaitersEntity() {
-        return waitersEntity;
+        return waiters;
     }
 
-    public void setWaitersEntity(WaitersEntity waitersEntity) {
-        this.waitersEntity = waitersEntity;
+    public void setWaitersEntity(WaitersEntity waiters) {
+        this.waiters = waiters;
     }
 
     public int getOrderPrice() {

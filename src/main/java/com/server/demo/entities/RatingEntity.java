@@ -20,7 +20,7 @@ public class RatingEntity {
     private java.util.Date timeOfReceipt;
 
     @ManyToOne
-    private WaitersEntity waitersEntity;
+    private WaitersEntity waiters;
 
 
     public RatingEntity(){
@@ -52,10 +52,10 @@ public class RatingEntity {
     }
 
     public WaitersEntity getWaitersEntity() {
-        return waitersEntity;
+        return waiters;
     }
 
-    public void setWaitersEntity(WaitersEntity waitersEntity) {
-        this.waitersEntity = waitersEntity;
+    public void setWaitersEntity(WaitersEntity waiters) {
+        this.waiters = waiters;
     }
 }

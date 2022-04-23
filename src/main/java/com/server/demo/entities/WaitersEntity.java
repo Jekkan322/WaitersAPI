@@ -25,7 +25,7 @@ public class WaitersEntity {
     Set<WaitersAchievementsEntity > waitersAchievements;
 
     @OneToMany(mappedBy = "waiters")
-    Set<WaitersMissionEntity > waitersMission;
+    Set<WaitersMissionEntity> waitersMission;
 
     @OneToOne(mappedBy = "waiters")
     private User user;

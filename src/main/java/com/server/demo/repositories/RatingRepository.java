@@ -17,8 +17,8 @@ import java.util.Optional;
 public interface RatingRepository extends CrudRepository<RatingEntity,Long> {
 
     @Query("select sum(rating) from RatingEntity where timeOfReceipt>?1\n" +
-            "group by waitersEntity\n" +
-            "having waitersEntity.id =?2")
+            "group by waiters\n" +
+            "having waiters.id =?2")
     Long filterAllRating(Date date,Long waiterId);
 
     @Query("select max(timeOfReceipt) from RatingEntity")
