@@ -3,9 +3,7 @@ package com.server.demo.service;
 import com.server.demo.entities.OrdersEntity;
 import com.server.demo.entities.RatingEntity;
 import com.server.demo.exception.OrderNotFoundException;
-import com.server.demo.model.Orders;
-import com.server.demo.model.OrdersForCreate;
-import com.server.demo.model.OrdersPlugin;
+import com.server.demo.model.*;
 import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +47,9 @@ public class OrdersService {
     }
 
     public Orders ordersClosedPlugin(OrdersPlugin ordersPlugin) throws OrderNotFoundException {
+        if(ordersPlugin.getItems().size()==0){
+            ordersPlugin.getItems().add(new DishOrder(1l,6,false));
+        }
         OrdersEntity ordersEntity = OrdersEntity.toNewEntity(ordersPlugin,waitersRepository,menuRepository,dishOrderRepository,ordersRepository);
         Orders orders = ordersCompleted(ordersEntity.getId());
         return orders;

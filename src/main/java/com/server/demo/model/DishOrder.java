@@ -12,6 +12,12 @@ public class DishOrder {
 
     }
 
+    public DishOrder(Long menuIndex, int amountDishes, Boolean goList) {
+        this.menuIndex = menuIndex;
+        this.amountDishes = amountDishes;
+        this.goList = goList;
+    }
+
     public Long getMenuIndex() {
         return menuIndex;
     }
