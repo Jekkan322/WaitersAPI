@@ -33,9 +33,9 @@ public class DishOrderEntity {
 
     public static DishOrderEntity toEntity(DishOrder dishOrder, MenuRepository menuRepository, OrdersEntity ordersEntity, DishOrderRepository dishOrderRepository){
         DishOrderEntity dishOrderEntity = new DishOrderEntity();
-        dishOrderEntity.setId(new DishOrderKey(dishOrder.getMenuId(),ordersEntity.getId()));
+        dishOrderEntity.setId(new DishOrderKey(dishOrder.getMenuIndex(),ordersEntity.getId()));
         dishOrderEntity.setOrders(ordersEntity);
-        dishOrderEntity.setMenu(menuRepository.findById(dishOrder.getMenuId()).get());
+        dishOrderEntity.setMenu(menuRepository.findById(dishOrder.getMenuIndex()).get());
         dishOrderEntity.setAmountDishes(dishOrder.getAmountDishes());
         dishOrderEntity.setGoList(dishOrder.isGoList());
         dishOrderRepository.save(dishOrderEntity);

@@ -203,4 +203,20 @@ public class WaitersService {
         }
         return result;
     }
+
+    public ArrayList<WaitersPlugin> waitersPlugins(ArrayList<WaitersPlugin> waitersPlugins){
+        ArrayList<WaitersPlugin> waiters=new ArrayList<>();
+        for(int i=0;i<waitersPlugins.size();i++){
+            WaitersEntity waitersEntity=new WaitersEntity();
+            if(!waitersRepository.findByUUID(waitersPlugins.get(i).getgUID()).isPresent()){
+                waitersEntity.setFirstName(waitersPlugins.get(i).getFirstName());
+                waitersEntity.setLastName(waitersPlugins.get(i).getLastName());
+                waitersEntity.setUUID(waitersPlugins.get(i).getgUID());
+                waitersEntity.setRating(0l);
+                waitersRepository.save(waitersEntity);
+                waiters.add(new WaitersPlugin(waitersEntity.getUUID(),waitersEntity.getFirstName(),waitersEntity.getLastName()));
+            }
+        }
+        return waiters;
+    }
 }

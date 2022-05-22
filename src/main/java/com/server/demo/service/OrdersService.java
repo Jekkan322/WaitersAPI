@@ -5,6 +5,7 @@ import com.server.demo.entities.RatingEntity;
 import com.server.demo.exception.OrderNotFoundException;
 import com.server.demo.model.Orders;
 import com.server.demo.model.OrdersForCreate;
+import com.server.demo.model.OrdersPlugin;
 import com.server.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,12 @@ public class OrdersService {
         return Orders.toModel((OrdersEntity.toEntity(ordersForCreate,waitersRepository,menuRepository,dishOrderRepository,ordersRepository)));
     }
 
+    public Orders ordersClosedPlugin(OrdersPlugin ordersPlugin) throws OrderNotFoundException {
+        OrdersEntity ordersEntity = OrdersEntity.toNewEntity(ordersPlugin,waitersRepository,menuRepository,dishOrderRepository,ordersRepository);
+        Orders orders = ordersCompleted(ordersEntity.getId());
+        return orders;
+    }
+
     public Long ordersDelete(Long id) throws OrderNotFoundException {
         OrdersEntity orders=ordersRepository.findById(id).get();
         if(orders==null){
@@ -69,7 +76,6 @@ public class OrdersService {
         orders.setWaitersEntity(ordersEntity.getWaitersEntity());
         if(orders.isOrderStatus()){
             achievementsService.checkAllAchievements(orders);
-
         }
         return Orders.toModel(ordersRepository.save(orders));
     }

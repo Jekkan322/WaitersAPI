@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name="menu")
 public class MenuEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne

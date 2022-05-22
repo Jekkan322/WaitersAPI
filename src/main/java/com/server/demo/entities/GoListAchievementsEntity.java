@@ -2,6 +2,8 @@ package com.server.demo.entities;
 
 
 
+import com.server.demo.model.AchievementsForCreate;
+import com.server.demo.model.MissionForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -38,5 +40,12 @@ public class GoListAchievementsEntity extends AchievementsEntity {
         }
         waitersRepository.save(waitersEntity);
         waitersAchievementsRepository.save(waitersAchievementsEntity);
+    }
+
+    public GoListAchievementsEntity(AchievementsForCreate achievementsForCreate){
+        super(achievementsForCreate);
+    }
+
+    public GoListAchievementsEntity(){
     }
 }

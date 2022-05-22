@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.demo.model.DishOrder;
 import com.server.demo.model.Orders;
 import com.server.demo.model.OrdersForCreate;
+import com.server.demo.model.OrdersPlugin;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.MenuRepository;
 import com.server.demo.repositories.OrdersRepository;
@@ -14,9 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.time.ZonedDateTime;
 import java.util.logging.Logger;
 
@@ -61,6 +60,34 @@ public class OrdersEntity {
         Set<DishOrderEntity> dishOrderEntitySet=new HashSet<>();
         ordersRepository.save(ordersEntity);
         for(DishOrder dishOrder : orders.getDishOrder()){
+            dishOrderEntitySet.add(DishOrderEntity.toEntity(dishOrder,menuRepository,ordersEntity,dishOrderRepository));
+        }
+        ordersEntity.setDishOrder(dishOrderEntitySet);
+
+        return  ordersEntity;
+    }
+
+
+
+    public static OrdersEntity toNewEntity(OrdersPlugin orders, WaitersRepository waitersRepository, MenuRepository menuRepository, DishOrderRepository dishOrderRepository, OrdersRepository ordersRepository){
+        OrdersEntity ordersEntity=new OrdersEntity();
+        ordersEntity.setId(orders.getId());
+        ordersEntity.setOrderPrice(orders.getFullSum());
+        if(orders.getOpenTime()!=null){
+            ordersEntity.setOrderTime(orders.getOpenTime());
+        }
+        else{
+            ordersEntity.setOrderTime(Date.from(ZonedDateTime.now().toInstant()));
+        }
+        if(!waitersRepository.findByUUID(orders.getWaiterId()).isPresent()){
+            WaitersEntity waitersEntity=new WaitersEntity();
+            waitersEntity.setUUID(orders.getWaiterId());
+            waitersRepository.save(waitersEntity);
+        }
+        ordersEntity.setWaitersEntity(waitersRepository.findByUUID(orders.getWaiterId()).get());
+        Set<DishOrderEntity> dishOrderEntitySet=new HashSet<>();
+        ordersRepository.save(ordersEntity);
+        for(DishOrder dishOrder : orders.getItems()){
             dishOrderEntitySet.add(DishOrderEntity.toEntity(dishOrder,menuRepository,ordersEntity,dishOrderRepository));
         }
         ordersEntity.setDishOrder(dishOrderEntitySet);

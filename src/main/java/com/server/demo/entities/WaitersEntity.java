@@ -3,6 +3,7 @@ package com.server.demo.entities;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name="waiters")
@@ -11,6 +12,7 @@ public class WaitersEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String UUID;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -38,6 +40,14 @@ public class WaitersEntity {
 
     public WaitersEntity(){
 
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 
     public Date getDateOfEntry() {

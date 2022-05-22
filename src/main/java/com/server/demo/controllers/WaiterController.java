@@ -3,11 +3,14 @@ package com.server.demo.controllers;
 import com.server.demo.entities.WaitersEntity;
 import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.model.Waiters;
+import com.server.demo.model.WaitersPlugin;
 import com.server.demo.service.WaitersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -113,6 +116,15 @@ public class WaiterController {
         }catch (WaiterNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
+    @PostMapping("Iikowaiters")
+    public ResponseEntity setPluginWaiter(@RequestBody ArrayList<WaitersPlugin> waitersPlugins){
+        try{
+            return ResponseEntity.ok(waitersService.waitersPlugins(waitersPlugins));
+        }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }

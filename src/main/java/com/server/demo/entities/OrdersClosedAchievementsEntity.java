@@ -1,5 +1,6 @@
 package com.server.demo.entities;
 
+import com.server.demo.model.AchievementsForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -31,5 +32,12 @@ public class OrdersClosedAchievementsEntity extends AchievementsEntity{
         }
         waitersRepository.save(waitersEntity);
         waitersAchievementsRepository.save(waitersAchievementsEntity);
+    }
+
+    public OrdersClosedAchievementsEntity(AchievementsForCreate achievementsForCreate) {
+        super(achievementsForCreate);
+    }
+
+    public OrdersClosedAchievementsEntity() {
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.demo.entities.WaitersEntity;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Waiters {
     private Long id;
@@ -34,6 +35,7 @@ public class Waiters {
 
     public Waiters() {
     }
+
 
     public Date getEmploymentDate() {
         return employmentDate;

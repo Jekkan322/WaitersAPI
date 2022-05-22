@@ -1,6 +1,7 @@
 package com.server.demo.entities;
 
 
+import com.server.demo.model.AchievementsForCreate;
 import com.server.demo.repositories.DishOrderRepository;
 import com.server.demo.repositories.WaitersAchievementsRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -27,6 +28,14 @@ public abstract class AchievementsEntity{
 
     @OneToMany(mappedBy = "achievements")
     Set<WaitersAchievementsEntity> waitersAchievements;
+
+    public AchievementsEntity(AchievementsForCreate achievementsForCreate) {
+        this.name = achievementsForCreate.getName();
+        this.description = achievementsForCreate.getDescription();
+        this.requiredInitialAmount = achievementsForCreate.getRequiredInitialAmount();
+        this.levelIncreaseFactor = achievementsForCreate.getLevelIncreaseFactor();
+        this.pictureURL = achievementsForCreate.getPictureURL();
+    }
 
     public AchievementsEntity(){
 

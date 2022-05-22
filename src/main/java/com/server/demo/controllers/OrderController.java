@@ -5,6 +5,7 @@ import com.server.demo.entities.OrdersEntity;
 import com.server.demo.exception.OrderNotFoundException;
 import com.server.demo.model.Orders;
 import com.server.demo.model.OrdersForCreate;
+import com.server.demo.model.OrdersPlugin;
 import com.server.demo.repositories.OrdersRepository;
 import com.server.demo.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,15 @@ public class OrderController {
             printWriter.flush();
             String stackTrace = writer.toString();
             return ResponseEntity.badRequest().body("Произошла ошибка: "+e.getMessage()+"\n"+stackTrace);
+        }
+    }
+
+    @PostMapping("closedOrder")
+    public ResponseEntity orderPlugin(@RequestBody OrdersPlugin ordersPlugin){
+        try{
+            return ResponseEntity.ok(ordersService.ordersClosedPlugin(ordersPlugin));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }
 
