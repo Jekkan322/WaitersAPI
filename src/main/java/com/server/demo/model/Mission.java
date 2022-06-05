@@ -32,7 +32,7 @@ public class Mission {
         Mission model= new Mission();
         model.setId(missionEntity.getId());
         model.setMissionName(missionEntity.getName());
-        model.setMissionDescription(missionEntity.getName());
+        model.setMissionDescription(missionEntity.getDescription());
         model.setAmountReward(missionEntity.getAmountReward());
         model.setDeadlineTime(missionEntity.getDeadlineTime());
         model.setDateOfCreation(missionEntity.getDateOfCreation());

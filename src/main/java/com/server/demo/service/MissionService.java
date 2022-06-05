@@ -85,7 +85,7 @@ public class MissionService {
         missionEntity.setDescription(mission.getMissionDescription());
         missionEntity.setAmountReward(mission.getAmountReward());
         missionEntity.setDeadlineTime(mission.getDeadlineTime());
-        missionEntity.setRequirementsAmount(mission.getAmountReward());
+        missionEntity.setRequirementsAmount(mission.getRequirementsAmount());
         missionEntity.setPersonalMissionAmount(mission.getRequirementsForTheFirstAward());
         return Mission.toModel(missionRepository.save(missionEntity));
     }
