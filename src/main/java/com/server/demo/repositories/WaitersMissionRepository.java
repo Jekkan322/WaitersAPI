@@ -18,10 +18,10 @@ public interface WaitersMissionRepository extends CrudRepository<WaitersMissionE
     Optional<List<WaitersMissionEntity>> findByWaitersId(Long waitersId);
     Optional<WaitersMissionEntity> findByWaitersIdAndMissionId(Long waitersId, Long missionId);
 
-    @Query("select u from WaitersMissionEntity u WHERE u.waiters.id=?1")
+    @Query("select u from WaitersMissionEntity u WHERE u.waiters.id=?1 and u.waiters.active=true")
     Collection<WaitersMissionEntity> filterWaiterByMissions(Long waitersId);
 
-    @Query("select sum(progress) from WaitersMissionEntity where mission.id=?1")
+    @Query("select sum(progress) from WaitersMissionEntity where mission.id=?1 and waiters.active=true")
     Integer allProgress(Long missionId);
 
     /*@Query("select  sum(progress) from WaitersMissionEntity Where waiters.id=?2 and dateProgress>?1 and mission.missionName='блюдо дня'")
