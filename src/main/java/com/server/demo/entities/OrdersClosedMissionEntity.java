@@ -61,6 +61,11 @@ public class OrdersClosedMissionEntity extends MissionEntity{
         return result;
     }
 
+    @Override
+    public String getType() {
+        return "orderClosed";
+    }
+
 
     public OrdersClosedMissionEntity(MissionForCreate missionForCreate){
         super(missionForCreate);

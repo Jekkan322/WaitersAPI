@@ -82,6 +82,7 @@ public class OrdersEntity {
         if(!waitersRepository.findByUUID(orders.getWaiterId()).isPresent()){
             WaitersEntity waitersEntity=new WaitersEntity();
             waitersEntity.setUUID(orders.getWaiterId());
+            waitersEntity.setRating(0l);
             waitersRepository.save(waitersEntity);
         }
         ordersEntity.setWaitersEntity(waitersRepository.findByUUID(orders.getWaiterId()).get());

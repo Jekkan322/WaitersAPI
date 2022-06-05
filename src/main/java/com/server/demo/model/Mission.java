@@ -26,6 +26,8 @@ public class Mission {
     @Temporal(TemporalType.DATE)
     private java.util.Date dateOfCreation;
 
+    private String missionType;
+
     public static Mission toModel(MissionEntity missionEntity){
         Mission model= new Mission();
         model.setId(missionEntity.getId());
@@ -36,6 +38,7 @@ public class Mission {
         model.setDateOfCreation(missionEntity.getDateOfCreation());
         model.setRequirementsForTheFirstAward(missionEntity.getPersonalMissionAmount());
         model.setRequirementsAmount(missionEntity.getRequirementsAmount());
+        model.setMissionType(missionEntity.getType());
         return model;
     }
 
@@ -49,6 +52,22 @@ public class Mission {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getPersonalMissionAmount() {
+        return personalMissionAmount;
+    }
+
+    public void setPersonalMissionAmount(int personalMissionAmount) {
+        this.personalMissionAmount = personalMissionAmount;
+    }
+
+    public String getMissionType() {
+        return missionType;
+    }
+
+    public void setMissionType(String missionType) {
+        this.missionType = missionType;
     }
 
     public String getMissionName() {

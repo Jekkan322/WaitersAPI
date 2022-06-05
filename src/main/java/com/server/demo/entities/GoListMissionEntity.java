@@ -65,6 +65,11 @@ public class GoListMissionEntity extends MissionEntity{
         return dishOrderRepository.sumGoList(date);
     }
 
+    @Override
+    public String getType() {
+        return "goList";
+    }
+
     public GoListMissionEntity(MissionForCreate missionForCreate){
         super(missionForCreate);
     }

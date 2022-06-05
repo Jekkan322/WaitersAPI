@@ -27,7 +27,7 @@ public class MissionController {
     @GetMapping("mission/{id}")
     public ResponseEntity getMission(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(missionService.allMissions());
+            return ResponseEntity.ok(missionService.getMission(id));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }

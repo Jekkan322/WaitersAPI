@@ -100,6 +100,7 @@ public class MissionService {
         return id;
     }
 
+
     public Restaurant allMissions(){
         Restaurant result =new Restaurant();
         List<MissionsOfRestaurant> statistics=new ArrayList<>();
@@ -164,7 +165,6 @@ public class MissionService {
             result.setFirstName(waiters.getFirstName());
             result.setLastName(waiters.getLastName());
             statistics.add(result);
-
         }
         int progress=0;
         for(MissionEntity missionEntity:missionRepository.findAll()){

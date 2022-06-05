@@ -40,6 +40,8 @@ public abstract class MissionEntity{
 
     abstract public Integer calcProgress(Date date, OrdersRepository ordersRepository,DishOrderRepository dishOrderRepository);
 
+    abstract public String getType();
+
     public MissionEntity(){
 
     }

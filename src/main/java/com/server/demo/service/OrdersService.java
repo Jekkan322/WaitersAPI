@@ -48,7 +48,7 @@ public class OrdersService {
 
     public Orders ordersClosedPlugin(OrdersPlugin ordersPlugin) throws OrderNotFoundException {
         if(ordersPlugin.getItems().size()==0){
-            ordersPlugin.getItems().add(new DishOrder(1l,6,false));
+            ordersPlugin.getItems().add(new DishOrder(1l,3,false));
         }
         OrdersEntity ordersEntity = OrdersEntity.toNewEntity(ordersPlugin,waitersRepository,menuRepository,dishOrderRepository,ordersRepository);
         Orders orders = ordersCompleted(ordersEntity.getId());

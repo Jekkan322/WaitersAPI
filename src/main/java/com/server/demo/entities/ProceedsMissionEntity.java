@@ -69,6 +69,11 @@ public class ProceedsMissionEntity extends MissionEntity{
         return result;
     }
 
+    @Override
+    public String getType() {
+        return "proceeds";
+    }
+
     public ProceedsMissionEntity(MissionForCreate missionForCreate){
         super(missionForCreate);
     }

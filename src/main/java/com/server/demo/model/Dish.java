@@ -4,11 +4,21 @@ public class Dish {
     private int id;
     private String name;
     private int price;
+    private boolean goList;
 
-    public Dish(int id, String name, int price) {
+    public Dish(int id, String name, int price, boolean goList) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.goList = goList;
+    }
+
+    public boolean isGoList() {
+        return goList;
+    }
+
+    public void setGoList(boolean goList) {
+        this.goList = goList;
     }
 
     public Dish() {
