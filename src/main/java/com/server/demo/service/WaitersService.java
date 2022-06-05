@@ -70,6 +70,7 @@ public class WaitersService {
         if(waiters.getTotalScores()==null){
             waitersEntity.setRating(0l);
         }
+        waitersEntity.setActive(true);
         waitersRepository.save(waitersEntity);
         return Waiters.toModel(waitersEntity);
     }
