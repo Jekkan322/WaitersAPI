@@ -177,13 +177,8 @@ public class MissionService {
             progress=missionEntity.calcProgress(ordersRepository,dishOrderRepository);
             missions.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
         }
-        return new StatisticsForWeb(statistics,missions);
-
-
+        int averageRestaurant=ordersRepository.averageRevenueRest();
+        return new StatisticsForWeb(statistics,missions,averageRestaurant);
     }
-
-
-
-
 
 }

@@ -42,4 +42,7 @@ public interface OrdersRepository extends CrudRepository<OrdersEntity,Long> {
 
     @Query("SELECT AVG(orderPrice) from OrdersEntity WHERE waiters.id=?1")
     Integer averageRevenue(Long id);
+
+    @Query("SELECT AVG(orderPrice) from OrdersEntity")
+    Integer averageRevenueRest();
 }
