@@ -20,6 +20,7 @@ public class MenuEntity {
     private int price;
     private int quantityInStock;
     private boolean goList;
+    private boolean active;
 
     @OneToMany(mappedBy = "menu")
     Set<DishOrderEntity> dishOrder;
@@ -28,6 +29,13 @@ public class MenuEntity {
 
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public boolean isGoList() {
         return goList;

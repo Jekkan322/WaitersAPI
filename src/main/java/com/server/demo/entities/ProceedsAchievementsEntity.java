@@ -50,6 +50,11 @@ public class ProceedsAchievementsEntity extends  AchievementsEntity{
         waitersAchievementsRepository.save(waitersAchievementsEntity);
     }
 
+    @Override
+    public String getType() {
+        return "proceeds";
+    }
+
     public ProceedsAchievementsEntity(AchievementsForCreate achievementsForCreate) {
         super(achievementsForCreate);
     }

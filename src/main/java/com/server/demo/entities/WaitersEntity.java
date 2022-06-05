@@ -18,6 +18,7 @@ public class WaitersEntity {
     private String middleName;
     private String position;
     private Long rating;
+    private boolean active;
 
     @Basic
     @Temporal(TemporalType.DATE)
@@ -40,6 +41,14 @@ public class WaitersEntity {
 
     public WaitersEntity(){
 
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getUUID() {

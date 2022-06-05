@@ -1,6 +1,7 @@
 package com.server.demo.service;
 
 import com.server.demo.entities.MenuEntity;
+import com.server.demo.entities.MissionEntity;
 import com.server.demo.entities.WaitersEntity;
 import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.model.Dish;
@@ -50,7 +51,12 @@ public class MenuService {
     public List<MenuEntity> allDishes(){
         Iterable<MenuEntity> menuEntities= menuRepository.findAll();
         List<MenuEntity> resultEntity=new ArrayList<>();
-        menuEntities.forEach(a->resultEntity.add(a));
+        for(MenuEntity menu:menuEntities){
+            if(menu.isActive()){
+                resultEntity.add(menu);
+            }
+        }
+        //menuEntities.forEach(a->resultEntity.add(a));
         return resultEntity;
     }
 }

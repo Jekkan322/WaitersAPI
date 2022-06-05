@@ -34,6 +34,11 @@ public class OrdersClosedAchievementsEntity extends AchievementsEntity{
         waitersAchievementsRepository.save(waitersAchievementsEntity);
     }
 
+    @Override
+    public String getType() {
+        return "orderClosed";
+    }
+
     public OrdersClosedAchievementsEntity(AchievementsForCreate achievementsForCreate) {
         super(achievementsForCreate);
     }

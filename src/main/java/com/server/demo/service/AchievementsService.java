@@ -37,10 +37,15 @@ public class AchievementsService {
 
     }
 
+    public AchievementsForWeb getAchievement(Long id){
+        AchievementsEntity achievementsEntity=achievementsRepository.findById(id).get();
+        return new AchievementsForWeb(achievementsEntity.getId(),achievementsEntity.getName(),achievementsEntity.getDescription(),achievementsEntity.getRequiredInitialAmount(),achievementsEntity.getLevelIncreaseFactor(),achievementsEntity.getPictureURL(),achievementsEntity.getType());
+    }
+
     public List<AchievementsForWeb> allAchievements(){
         List<AchievementsForWeb> result =new ArrayList<AchievementsForWeb>();
         for(AchievementsEntity achievementsEntity:achievementsRepository.findAll()){
-            result.add(new AchievementsForWeb(achievementsEntity.getId(),achievementsEntity.getName(),achievementsEntity.getDescription(),achievementsEntity.getRequiredInitialAmount(),achievementsEntity.getLevelIncreaseFactor()));
+            result.add(new AchievementsForWeb(achievementsEntity.getId(),achievementsEntity.getName(),achievementsEntity.getDescription(),achievementsEntity.getRequiredInitialAmount(),achievementsEntity.getLevelIncreaseFactor(),achievementsEntity.getPictureURL(),achievementsEntity.getType()));
         }
         return result;
     }

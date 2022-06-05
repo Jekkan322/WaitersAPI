@@ -42,10 +42,17 @@ public class GoListAchievementsEntity extends AchievementsEntity {
         waitersAchievementsRepository.save(waitersAchievementsEntity);
     }
 
+    @Override
+    public String getType() {
+        return "goList";
+    }
+
     public GoListAchievementsEntity(AchievementsForCreate achievementsForCreate){
         super(achievementsForCreate);
     }
 
     public GoListAchievementsEntity(){
     }
+
+
 }

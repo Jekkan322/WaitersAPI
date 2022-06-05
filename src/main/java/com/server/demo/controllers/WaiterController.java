@@ -66,7 +66,7 @@ public class WaiterController {
         }
     }
 
-    @DeleteMapping("waiters/delete/{id}")
+    @PutMapping("waiters/delete/{id}")
     public ResponseEntity deleteWaiters(@PathVariable Long id){
         try{
             return ResponseEntity.ok(waitersService.deleteWaiter(id));
@@ -98,10 +98,10 @@ public class WaiterController {
         }
     }
 
-    @GetMapping("waiters/{id}/filter")
-    public ResponseEntity filterRating(@PathVariable Long id,@RequestParam String filter){
+    @GetMapping("waiters/{id}/type")
+    public ResponseEntity filterRating(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(waitersService.filter(id,filter));
+            return ResponseEntity.ok(waitersService.filter(id));
         }catch (WaiterNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){
@@ -110,9 +110,9 @@ public class WaiterController {
     }
 
     @GetMapping("waiters/{id}/statistics")
-    public ResponseEntity getStatistics(@PathVariable Long id,@RequestParam String filter){
+    public ResponseEntity getStatistics(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(waitersService.statistics(id,filter));
+            return ResponseEntity.ok(waitersService.statistics(id));
         }catch (WaiterNotFoundException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }catch (Exception e){

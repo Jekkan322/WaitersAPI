@@ -9,16 +9,20 @@ public class AchievementsForWeb {
     private String description;
     private int requiredInitialAmount;
     private int levelIncreaseFactor;
+    private String url;
+    private String achievementsType;
 
     public AchievementsForWeb() {
     }
 
-    public AchievementsForWeb(Long id, String name, String description, int requiredInitialAmount, int levelIncreaseFactor) {
+    public AchievementsForWeb(Long id, String name, String description, int requiredInitialAmount, int levelIncreaseFactor, String url, String achievementsType) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.requiredInitialAmount = requiredInitialAmount;
         this.levelIncreaseFactor = levelIncreaseFactor;
+        this.url = url;
+        this.achievementsType = achievementsType;
     }
 
     public static AchievementsForWeb toModel(AchievementsEntity achievementsEntity){
@@ -28,7 +32,25 @@ public class AchievementsForWeb {
         model.setDescription(achievementsEntity.getDescription());
         model.setRequiredInitialAmount(achievementsEntity.getRequiredInitialAmount());
         model.setLevelIncreaseFactor(achievementsEntity.getLevelIncreaseFactor());
+        model.setAchievementsType(achievementsEntity.getType());
+        model.setUrl(achievementsEntity.getPictureURL());
         return model;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAchievementsType() {
+        return achievementsType;
+    }
+
+    public void setAchievementsType(String achievementsType) {
+        this.achievementsType = achievementsType;
     }
 
     public Long getId() {

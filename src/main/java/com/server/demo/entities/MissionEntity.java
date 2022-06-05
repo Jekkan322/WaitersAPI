@@ -38,7 +38,9 @@ public abstract class MissionEntity{
     abstract public void processOrder(OrdersEntity ordersEntity, WaitersMissionRepository waitersMissionRepository,
                                       WaitersRepository waitersRepository,RatingRepository ratingRepository, DishOrderRepository dishOrderRepository);
 
-    abstract public Integer calcProgress(Date date, OrdersRepository ordersRepository,DishOrderRepository dishOrderRepository);
+    /*abstract public Integer calcProgress(Date date, OrdersRepository ordersRepository,DishOrderRepository dishOrderRepository);*/
+
+    abstract public Integer calcProgress(OrdersRepository ordersRepository,DishOrderRepository dishOrderRepository);
 
     abstract public String getType();
 

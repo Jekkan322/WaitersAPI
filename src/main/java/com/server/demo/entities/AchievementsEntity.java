@@ -43,6 +43,8 @@ public abstract class AchievementsEntity{
     abstract public void  processOrder(OrdersEntity ordersEntity, WaitersAchievementsRepository waitersAchievementsRepository,
                                        WaitersRepository waitersRepository, DishOrderRepository dishOrderRepository);
 
+    abstract public String getType();
+
 
 
     public int getRequiredInitialAmount() {

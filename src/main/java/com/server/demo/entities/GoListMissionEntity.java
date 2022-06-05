@@ -57,12 +57,12 @@ public class GoListMissionEntity extends MissionEntity{
     }
 
     @Override
-    public Integer calcProgress(Date date, OrdersRepository ordersRepository, DishOrderRepository dishOrderRepository) {
-        Integer result=dishOrderRepository.sumGoList(date);
+    public Integer calcProgress(OrdersRepository ordersRepository, DishOrderRepository dishOrderRepository) {
+        Integer result=dishOrderRepository.sumGoList();
         if(result==null){
             result=0;
         }
-        return dishOrderRepository.sumGoList(date);
+        return dishOrderRepository.sumGoList();
     }
 
     @Override

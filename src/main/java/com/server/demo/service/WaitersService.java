@@ -47,7 +47,12 @@ public class WaitersService {
     public List<Waiters> getAllWaiters(){
         Iterable<WaitersEntity> waiters= waitersRepository.findAll();
         List<WaitersEntity> resultEntity=new ArrayList<>();
-        waiters.forEach(a->resultEntity.add(a));
+        for(WaitersEntity waitersEntity:waiters){
+            if(waitersEntity.isActive()){
+                resultEntity.add(waitersEntity);
+            }
+        }
+        //waiters.forEach(a->resultEntity.add(a));
         return resultEntity.stream().map(Waiters::toModel).collect(Collectors.toList());
     }
 
@@ -80,13 +85,14 @@ public class WaitersService {
         return Waiters.toModel(waitersRepository.save(waitersEntity));
     }
 
-    public Long deleteWaiter(Long id) throws WaiterNotFoundException {
+    public WaitersEntity deleteWaiter(Long id) throws WaiterNotFoundException {
         WaitersEntity waiters = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        waitersRepository.deleteById(id);
-        return id;
+        //waitersRepository.deleteById(id);
+        waiters.setActive(false);
+        return waitersRepository.save(waiters);
     }
 
     public List<Achievements> getAllAchievements(Long id) throws WaiterNotFoundException {
@@ -118,12 +124,12 @@ public class WaitersService {
         return result;
     }
 
-    public List<WaitersForMobile> filter(Long id,String filter) throws WaiterNotFoundException {
+    public List<WaitersForMobile> filter(Long id) throws WaiterNotFoundException {
         WaitersEntity waiters = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        /*Date dateNow= Date.from(ZonedDateTime.now().toInstant());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateNow);
         switch (filter){
@@ -137,14 +143,14 @@ public class WaitersService {
                 calendar.add(Calendar.MONTH,-1);
                 break;
         }
-        Date date=calendar.getTime();
+        Date date=calendar.getTime();*/
         List<WaitersEntity> result=new ArrayList<>();
         List<WaitersForMobile> resultModel=new ArrayList<>();
         Long resultFilter;
         for(WaitersEntity waitersEntity:waitersRepository.findAll()){
-            resultFilter=ratingRepository.filterAllRating(date,waitersEntity.getId());
+            resultFilter=ratingRepository.filterAllRating(waitersEntity.getId());
             if(resultFilter!=null){
-                waitersEntity.setRating(ratingRepository.filterAllRating(date,waitersEntity.getId()));
+                waitersEntity.setRating(ratingRepository.filterAllRating(waitersEntity.getId()));
             }else{
                 waitersEntity.setRating(0l);
             }
@@ -156,12 +162,12 @@ public class WaitersService {
         return resultModel.stream().sorted((h1, h2) -> h2.getScores().compareTo(h1.getScores())).collect(Collectors.toList());
     }
 
-    public Statistics statistics(Long id,String filter) throws WaiterNotFoundException {
+    public Statistics statistics(Long id) throws WaiterNotFoundException {
         WaitersEntity waiters = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
-        Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        /*Date dateNow= Date.from(ZonedDateTime.now().toInstant());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateNow);
         switch (filter){
@@ -175,31 +181,37 @@ public class WaitersService {
                 calendar.add(Calendar.MONTH,-1);
                 break;
         }
-        Date date=calendar.getTime();
+        Date date=calendar.getTime();*/
         Statistics result=new Statistics();
-        Integer orders=ordersRepository.countClosedOrders(date,waiters.getId());
+        /*Integer orders=ordersRepository.countClosedOrders(waiters.getId());
         if(orders==null){
             result.setOrders(0);
         }
         else{
             result.setOrders(orders);
+        }*/
+        Integer average = ordersRepository.averageRevenue(waiters.getId());
+        if(average==null){
+            result.setAverageCheque(0);
+        }else{
+            result.setAverageCheque(average);
         }
-        Long rating=ratingRepository.filterAllRating(date,waiters.getId());
+        Long rating=ratingRepository.filterAllRating(waiters.getId());
         if(rating==null){
             result.setRating(0);
         }else{
             result.setRating(rating.intValue());
         }
-        Integer revenue=ordersRepository.waiterRevenue(date,waiters.getId());
+        Integer revenue=ordersRepository.waiterRevenue(waiters.getId());
         if(revenue==null){
             result.setRevenue(0);
         }else{
             result.setRevenue(revenue);
         }
-        if(dishOrderRepository.goListCount(date,waiters.getId())==null){
+        if(dishOrderRepository.goListCount(waiters.getId())==null){
             result.setGoList(0);
         }else{
-            result.setGoList(dishOrderRepository.goListCount(date,waiters.getId()));
+            result.setGoList(dishOrderRepository.goListCount(waiters.getId()));
         }
         return result;
     }

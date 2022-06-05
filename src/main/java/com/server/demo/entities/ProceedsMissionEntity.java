@@ -61,8 +61,8 @@ public class ProceedsMissionEntity extends MissionEntity{
     }
 
     @Override
-    public Integer calcProgress(Date date, OrdersRepository ordersRepository, DishOrderRepository dishOrderRepository) {
-        Integer result=ordersRepository.sumRevenue(date);
+    public Integer calcProgress(OrdersRepository ordersRepository, DishOrderRepository dishOrderRepository) {
+        Integer result=ordersRepository.sumRevenue();
         if(result==null){
             result=0;
         }

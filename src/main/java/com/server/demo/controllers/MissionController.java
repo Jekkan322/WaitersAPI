@@ -70,13 +70,20 @@ public class MissionController {
     }
 
     @GetMapping("mission/statistics")
-    public ResponseEntity getStatistics(@RequestParam String filter){
+    public ResponseEntity getStatistics(){
         try{
-            return ResponseEntity.ok(missionService.statisticsWeb(filter));
+            return ResponseEntity.ok(missionService.statisticsWeb());
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
     }
 
-
+    @GetMapping("api/restaurant")
+    public ResponseEntity restaurant(){
+        try{
+            return ResponseEntity.ok(missionService.statisticsWeb());
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
 }

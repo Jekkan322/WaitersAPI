@@ -27,6 +27,15 @@ public class AchievementsController {
         }
     }
 
+    @GetMapping("achievements/{id}")
+    public ResponseEntity getAchievements(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(achievementsService.getAchievement(id));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
+        }
+    }
+
     @PutMapping("achievements/update/{id}")
     public ResponseEntity updateMission(@PathVariable Long id,@RequestBody AchievementsForWeb achievements){
         try{
