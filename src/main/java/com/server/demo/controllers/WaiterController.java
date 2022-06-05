@@ -66,7 +66,7 @@ public class WaiterController {
         }
     }
 
-    @PutMapping("waiters/delete/{id}")
+    @DeleteMapping("waiters/delete/{id}")
     public ResponseEntity deleteWaiters(@PathVariable Long id){
         try{
             return ResponseEntity.ok(waitersService.deleteWaiter(id));
