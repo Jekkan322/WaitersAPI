@@ -89,15 +89,14 @@ public class WaitersService {
         return Waiters.toModel(waitersRepository.save(waitersEntity));
     }
 
-    public Long deleteWaiter(Long id) throws WaiterNotFoundException {
+    public Waiters deleteWaiter(Long id) throws WaiterNotFoundException {
         WaitersEntity waiters = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
         }
         //waitersRepository.deleteById(id);
         waiters.setActive(false);
-        waitersRepository.save(waiters);
-        return id;
+        return Waiters.toModel(waitersRepository.save(waiters));
     }
 
     public List<Achievements> getAllAchievements(Long id) throws WaiterNotFoundException {
