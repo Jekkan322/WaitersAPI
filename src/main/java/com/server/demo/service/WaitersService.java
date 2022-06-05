@@ -67,6 +67,9 @@ public class WaitersService {
         waitersEntity.setLastName(waiters.getLastName());
         waitersEntity.setMiddleName(waiters.getMiddleName());
         waitersEntity.setDateOfEntry(waiters.getEmploymentDate());
+        if(waiters.getTotalScores()==null){
+            waitersEntity.setRating(0l);
+        }
         waitersRepository.save(waitersEntity);
         return Waiters.toModel(waitersEntity);
     }
