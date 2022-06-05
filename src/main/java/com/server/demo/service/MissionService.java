@@ -137,6 +137,8 @@ public class MissionService {
         List<Statistics> statistics=new ArrayList<>();
         List<MissionsOfRestaurant> missions=new ArrayList<>();
         for(WaitersEntity waiters:waitersRepository.findAll()){
+            if(!waiters.isActive())
+                continue;
             Statistics result=new Statistics();
             /*Integer orders=ordersRepository.countClosedOrders(waiters.getId());
             if(orders==null){
