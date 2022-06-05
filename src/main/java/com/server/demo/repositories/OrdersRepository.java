@@ -40,6 +40,6 @@ public interface OrdersRepository extends CrudRepository<OrdersEntity,Long> {
     @Query("SELECT COUNT(orderStatus) From OrdersEntity WHERE orderStatus=true")
     Integer sumOrdersClosed();
 
-    @Query("SELECT SUM(orderPrice) from OrdersEntity WHERE waiters.id=?1")
+    @Query("SELECT AVG(orderPrice) from OrdersEntity WHERE waiters.id=?1")
     Integer averageRevenue(Long id);
 }
