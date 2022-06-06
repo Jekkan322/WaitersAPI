@@ -205,6 +205,7 @@ public class MissionService {
         statistics.setGoList(goList);
         statistics.setAverageCheque(averageRestaurant);
         statistics.setOrders(ordersClosed);
+        statistics.setFirstName("Гудвин");
         return statistics;
     }
 
