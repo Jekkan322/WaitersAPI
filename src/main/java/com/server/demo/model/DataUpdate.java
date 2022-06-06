@@ -4,15 +4,25 @@ public class DataUpdate {
     private boolean personal;
     private boolean restaurant;
     private boolean leaderboard;
+    private boolean missions;
 
     public DataUpdate(){
 
     }
 
-    public DataUpdate(boolean personal, boolean restaurant, boolean leaderboard) {
+    public DataUpdate(boolean personal, boolean restaurant, boolean leaderboard, boolean missions) {
         this.personal = personal;
         this.restaurant = restaurant;
         this.leaderboard = leaderboard;
+        this.missions=missions;
+    }
+
+    public boolean isMissions() {
+        return missions;
+    }
+
+    public void setMissions(boolean missions) {
+        this.missions = missions;
     }
 
     public boolean isPersonal() {

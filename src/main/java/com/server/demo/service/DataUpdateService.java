@@ -53,9 +53,9 @@ public class DataUpdateService {
         }
         Date missions=missionRepository.lastMission();
         if(date.getLeaderboard().after(missions)){
-            result.setLeaderboard(false);
+            result.setMissions(false);
         }else{
-            result.setLeaderboard(true);
+            result.setMissions(true);
         }
         return result;
     }
