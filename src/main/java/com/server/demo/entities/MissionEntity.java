@@ -29,7 +29,7 @@ public abstract class MissionEntity{
     private java.util.Date deadlineTime;
 
     @Basic
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date dateOfCreation;
 
     @OneToMany(mappedBy = "mission",cascade = CascadeType.REMOVE)
