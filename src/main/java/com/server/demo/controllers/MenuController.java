@@ -26,9 +26,9 @@ public class MenuController {
     }
 
     @PutMapping("dishes/goList/{id}")
-    public ResponseEntity goList(@PathVariable Long id, @RequestBody Dish dish){
+    public ResponseEntity goList(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(menuService.updateDish(id,dish));
+            return ResponseEntity.ok(menuService.updateDish(id));
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }

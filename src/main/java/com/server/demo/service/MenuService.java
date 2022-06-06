@@ -35,11 +35,13 @@ public class MenuService {
         return dishes;
     }
 
-    public Dish updateDish(Long id, Dish dish){
+    public Dish updateDish(Long id){
         MenuEntity menuEntity=menuRepository.findById(id).get();
-        menuEntity.setPrice(dish.getPrice());
-        menuEntity.setDishName(dish.getName());
-        menuEntity.setGoList(dish.isGoList());
+        if(menuEntity.isGoList()){
+            menuEntity.setGoList(false);
+        }else{
+            menuEntity.setGoList(true);
+        }
         return new Dish(menuEntity.getId().intValue(),menuEntity.getDishName(),menuEntity.getPrice(),menuEntity.isGoList());
     }
 
