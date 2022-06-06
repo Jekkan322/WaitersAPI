@@ -26,7 +26,7 @@ public class MenuController {
     }
 
     @PutMapping("dishes/goList/{id}")
-    public ResponseEntity goList(Long id, @RequestBody Dish dish){
+    public ResponseEntity goList(@PathVariable Long id, @RequestBody Dish dish){
         try{
             return ResponseEntity.ok(menuService.updateDish(id,dish));
         }catch(Exception e){
@@ -35,7 +35,7 @@ public class MenuController {
     }
 
     @GetMapping("dishes/{id}")
-    public ResponseEntity getDish(Long id){
+    public ResponseEntity getDish(@PathVariable Long id){
         try{
             return ResponseEntity.ok(menuService.getId(id));
         }catch(Exception e){
