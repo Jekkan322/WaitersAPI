@@ -62,7 +62,7 @@ public class GoListMissionEntity extends MissionEntity{
         if(result==null){
             result=0;
         }
-        return dishOrderRepository.sumGoList();
+        return result;
     }
 
     @Override
