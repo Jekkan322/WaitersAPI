@@ -42,6 +42,7 @@ public class MenuService {
         }else{
             menuEntity.setGoList(true);
         }
+        menuRepository.save(menuEntity);
         return new Dish(menuEntity.getId().intValue(),menuEntity.getDishName(),menuEntity.getPrice(),menuEntity.isGoList());
     }
 
