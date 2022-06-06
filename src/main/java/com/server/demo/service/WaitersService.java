@@ -183,7 +183,7 @@ public class WaitersService {
                 waitersForMobile.setFirstName(waitersEntity.getFirstName());
                 waitersForMobile.setMiddleName(waitersEntity.getMiddleName());
                 waitersForMobile.setLastName(waitersEntity.getLastName());
-                waitersForMobile.setAverageCheque(newResult);
+                waitersForMobile.setScores(newResult);
                 resultModel.add(waitersForMobile);
             }
         }
@@ -197,7 +197,7 @@ public class WaitersService {
                 waitersForMobile.setFirstName(waitersEntity.getFirstName());
                 waitersForMobile.setMiddleName(waitersEntity.getMiddleName());
                 waitersForMobile.setLastName(waitersEntity.getLastName());
-                waitersForMobile.setAverageCheque(newResult);
+                waitersForMobile.setScores(newResult);
                 resultModel.add(waitersForMobile);
             }
         }
