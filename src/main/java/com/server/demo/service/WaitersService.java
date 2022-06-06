@@ -187,13 +187,13 @@ public class WaitersService {
         }
         Date date=calendar.getTime();*/
         Statistics result=new Statistics();
-        /*Integer orders=ordersRepository.countClosedOrders(waiters.getId());
+        Integer orders=ordersRepository.countClosedOrders(waiters.getId());
         if(orders==null){
             result.setOrders(0);
         }
         else{
             result.setOrders(orders);
-        }*/
+        }
         Integer average = ordersRepository.averageRevenue(waiters.getId());
         if(average==null){
             result.setAverageCheque(0);

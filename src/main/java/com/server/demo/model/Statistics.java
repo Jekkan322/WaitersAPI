@@ -3,7 +3,7 @@ package com.server.demo.model;
 public class Statistics {
     private int revenue;
     private int goList;
-    //private int orders;
+    private int orders;
     private int rating;
     private String firstName;
     private String lastName;
@@ -36,6 +36,14 @@ public class Statistics {
 
     public void setAverageCheque(int averageCheque) {
         this.averageCheque = averageCheque;
+    }
+
+    public int getOrders() {
+        return orders;
+    }
+
+    public void setOrders(int orders) {
+        this.orders = orders;
     }
 
     public int getRating() {

@@ -183,4 +183,69 @@ public class MissionService {
         return new StatisticsForWeb(statistics,missions,averageRestaurant);
     }
 
+    /*public Statistics statistics() throws MissionTypeNotFoundException {
+        *//*Date dateNow= Date.from(ZonedDateTime.now().toInstant());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dateNow);
+        switch (filter){
+            case("day"):
+                calendar.add(Calendar.DAY_OF_MONTH,-1);
+                break;
+            case("week"):
+                calendar.add(Calendar.WEEK_OF_MONTH,-1);
+                break;
+            case("month"):
+                calendar.add(Calendar.MONTH,-1);
+                break;
+        }
+        Date date=calendar.getTime();*//*
+        List<Statistics> statistics=new ArrayList<>();
+        List<MissionsOfRestaurant> missions=new ArrayList<>();
+        for(WaitersEntity waiters:waitersRepository.findAll()){
+            if(!waiters.isActive())
+                continue;
+            Statistics result=new Statistics();
+            *//*Integer orders=ordersRepository.countClosedOrders(waiters.getId());
+            if(orders==null){
+                result.setOrders(0);
+            }
+            else{
+                result.setOrders(orders);
+            }*//*
+            Integer average = ordersRepository.averageRevenue(waiters.getId());
+            if(average==null){
+                result.setAverageCheque(0);
+            }else{
+                result.setAverageCheque(average);
+            }
+            Long rating=ratingRepository.filterAllRating(waiters.getId());
+            if(rating==null){
+                result.setRating(0);
+            }else{
+                result.setRating(rating.intValue());
+            }
+            Integer revenue=ordersRepository.waiterRevenue(waiters.getId());
+            if(revenue==null){
+                result.setRevenue(0);
+            }else{
+                result.setRevenue(revenue);
+            }
+            if(dishOrderRepository.goListCount(waiters.getId())==null){
+                result.setGoList(0);
+            }else{
+                result.setGoList(dishOrderRepository.goListCount(waiters.getId()));
+            }
+            result.setFirstName(waiters.getFirstName());
+            result.setLastName(waiters.getLastName());
+            statistics.add(result);
+        }
+        int progress=0;
+        for(MissionEntity missionEntity:missionRepository.findAll()){
+            progress=missionEntity.calcProgress(ordersRepository,dishOrderRepository);
+            missions.add(new MissionsOfRestaurant(missionEntity.getId(),missionEntity.getName(),progress,missionEntity.getDeadlineTime(),missionEntity.getRequirementsAmount().intValue()));
+        }
+        int averageRestaurant=ordersRepository.averageRevenueRest();
+        return ;
+    }*/
+
 }
