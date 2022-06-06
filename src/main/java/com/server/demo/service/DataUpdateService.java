@@ -4,6 +4,7 @@ import com.server.demo.entities.WaitersEntity;
 import com.server.demo.exception.WaiterNotFoundException;
 import com.server.demo.model.DataUpdate;
 import com.server.demo.model.DateForUpdate;
+import com.server.demo.repositories.MissionRepository;
 import com.server.demo.repositories.OrdersRepository;
 import com.server.demo.repositories.RatingRepository;
 import com.server.demo.repositories.WaitersRepository;
@@ -22,6 +23,9 @@ public class DataUpdateService {
 
     @Autowired
     WaitersRepository waitersRepository;
+
+    @Autowired
+    MissionRepository missionRepository;
 
     public DataUpdate polling(Long waitersId, DateForUpdate date) throws WaiterNotFoundException {
         WaitersEntity waiters=waitersRepository.findById(waitersId).get();
@@ -43,6 +47,12 @@ public class DataUpdateService {
         }
         Date lastRating=ratingRepository.lastRating();
         if(date.getLeaderboard().after(lastRating)){
+            result.setLeaderboard(false);
+        }else{
+            result.setLeaderboard(true);
+        }
+        Date missions=missionRepository.lastMission();
+        if(date.getLeaderboard().after(missions)){
             result.setLeaderboard(false);
         }else{
             result.setLeaderboard(true);

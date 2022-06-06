@@ -28,6 +28,7 @@ public interface OrdersRepository extends CrudRepository<OrdersEntity,Long> {
     @Query("select max(orderTime) from OrdersEntity where orderStatus=true and waiters.active=true")
     Date lastOrder();
 
+
     /*@Query("SELECT sum(orderPrice) FROM OrdersEntity WHERE orderTime>?1 and orderStatus=true")
     Integer sumRevenue(Date date);*/
 

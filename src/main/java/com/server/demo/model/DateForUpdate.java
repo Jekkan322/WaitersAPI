@@ -11,11 +11,20 @@ public class DateForUpdate {
     private Date restaurant;
     @JsonFormat(timezone = "GMT+5")
     private Date leaderboard;
+    @JsonFormat(timezone = "GMT+5")
+    private Date missions;
 
     public DateForUpdate(){
 
     }
 
+    public Date getMissions() {
+        return missions;
+    }
+
+    public void setMissions(Date missions) {
+        this.missions = missions;
+    }
 
     public Date getPersonal() {
         return personal;
