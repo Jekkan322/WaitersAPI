@@ -78,12 +78,12 @@ public class MissionController {
         }
     }
 
-    /*@GetMapping("api/restaurant")
+    @GetMapping("api/restaurant")
     public ResponseEntity restaurant(){
         try{
-            return ResponseEntity.ok(missionService.statisticsWeb());
+            return ResponseEntity.ok(missionService.statistics());
         }catch(Exception e){
             return ResponseEntity.badRequest().body("Произошла ошибка"+e.getMessage());
         }
-    }*/
+    }
 }
