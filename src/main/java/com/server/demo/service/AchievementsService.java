@@ -55,7 +55,8 @@ public class AchievementsService {
         achievementsEntity.setName(achievements.getName());
         achievementsEntity.setDescription(achievements.getDescription());
         achievementsEntity.setRequiredInitialAmount(achievements.getRequiredInitialAmount());
-        achievements.setLevelIncreaseFactor(achievements.getLevelIncreaseFactor());
+        achievementsEntity.setLevelIncreaseFactor(achievements.getLevelIncreaseFactor());
+        achievementsEntity.setPictureURL(achievements.getUrl());
         return AchievementsForWeb.toModel(achievementsRepository.save(achievementsEntity));
     }
 
