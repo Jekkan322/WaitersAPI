@@ -37,7 +37,12 @@ public class DishOrderEntity {
         dishOrderEntity.setOrders(ordersEntity);
         dishOrderEntity.setMenu(menuRepository.findById(dishOrder.getMenuIndex()).get());
         dishOrderEntity.setAmountDishes(dishOrder.getAmountDishes());
-        dishOrderEntity.setGoList(dishOrder.isGoList());
+        if(menuRepository.findById(dishOrder.getMenuIndex()).get().isGoList()){
+            dishOrderEntity.setGoList(true);
+        }else{
+            dishOrderEntity.setGoList(false);
+        }
+        //dishOrderEntity.setGoList(dishOrder.isGoList());
         dishOrderRepository.save(dishOrderEntity);
         return dishOrderEntity;
     }
