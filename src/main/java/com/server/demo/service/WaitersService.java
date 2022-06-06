@@ -152,7 +152,7 @@ public class WaitersService {
         List<WaitersForMobile> resultModel=new ArrayList<>();
         Long resultFilter;
         Integer newResult;
-        if(type=="xp") {
+        if(type.equals("xp")) {
             for(WaitersEntity waitersEntity:waitersRepository.findAll()){
                 if(!waitersEntity.isActive()){
                     continue;
@@ -170,7 +170,7 @@ public class WaitersService {
             }
             return resultModel.stream().sorted((h1, h2) -> h2.getScores().compareTo(h1.getScores())).collect(Collectors.toList());
         }
-        if(type=="averagecheque"){
+        if(type.equals("averagecheque")){
             for(WaitersEntity waitersEntity:waitersRepository.findAll()){
                 if(!waitersEntity.isActive()){
                     continue;
@@ -187,7 +187,7 @@ public class WaitersService {
                 resultModel.add(waitersForMobile);
             }
         }
-        if(type=="golist"){
+        if(type.equals("golist")){
             for(WaitersEntity waitersEntity:waitersRepository.findAll()){
                 if(!waitersEntity.isActive()){
                     continue;
