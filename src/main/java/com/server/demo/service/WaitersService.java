@@ -194,6 +194,9 @@ public class WaitersService {
                 }
                 WaitersForMobile waitersForMobile=new WaitersForMobile();
                 newResult=dishOrderRepository.goListCount(waitersEntity.getId());
+                if(newResult==null) {
+                    newResult = 0;
+                }
                 waitersForMobile.setFirstName(waitersEntity.getFirstName());
                 waitersForMobile.setMiddleName(waitersEntity.getMiddleName());
                 waitersForMobile.setLastName(waitersEntity.getLastName());
