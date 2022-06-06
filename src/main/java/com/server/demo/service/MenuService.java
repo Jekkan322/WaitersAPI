@@ -35,28 +35,28 @@ public class MenuService {
         return dishes;
     }
 
-    public MenuEntity updateDish(Long id, Dish dish){
+    public Dish updateDish(Long id, Dish dish){
         MenuEntity menuEntity=menuRepository.findById(id).get();
         menuEntity.setPrice(dish.getPrice());
         menuEntity.setDishName(dish.getName());
         menuEntity.setGoList(dish.isGoList());
-        return menuRepository.save(menuEntity);
+        return new Dish(menuEntity.getId().intValue(),menuEntity.getDishName(),menuEntity.getPrice(),menuEntity.isGoList());
     }
 
-    public MenuEntity getId(Long id){
+    public Dish getId(Long id){
         MenuEntity menuEntity=menuRepository.findById(id).get();
-        return menuEntity;
+        return new Dish(menuEntity.getId().intValue(),menuEntity.getDishName(),menuEntity.getPrice(),menuEntity.isGoList());
     }
 
-    public List<MenuEntity> allDishes(){
+    public List<Dish> allDishes(){
         Iterable<MenuEntity> menuEntities= menuRepository.findAll();
-        List<MenuEntity> resultEntity=new ArrayList<>();
+        List<Dish> result=new ArrayList<>();
         for(MenuEntity menu:menuEntities){
             if(menu.isActive()){
-                resultEntity.add(menu);
+                result.add(new Dish(menu.getId().intValue(),menu.getDishName(),menu.getPrice(),menu.isGoList()));
             }
         }
         //menuEntities.forEach(a->resultEntity.add(a));
-        return resultEntity;
+        return result;
     }
 }
