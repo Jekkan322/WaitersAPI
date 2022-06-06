@@ -27,7 +27,8 @@ public class MenuService {
                 menuEntity.setId((long)dish.get(i).getId());
                 menuEntity.setDishName(dish.get(i).getName());
                 menuEntity.setPrice(dish.get(i).getPrice());
-                menuEntity.setGoList(dish.get(i).isGoList());
+                menuEntity.setGoList(false);
+                menuEntity.setActive(true);
                 menuRepository.save(menuEntity);
                 dishes.add(new Dish(menuEntity.getId().intValue(),menuEntity.getDishName(),menuEntity.getPrice(), menuEntity.isGoList()));
             }
