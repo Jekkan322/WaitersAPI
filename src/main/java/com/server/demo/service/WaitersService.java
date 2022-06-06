@@ -128,7 +128,7 @@ public class WaitersService {
         return result;
     }
 
-    public List<WaitersForMobile> filter(Long id) throws WaiterNotFoundException {
+    public List<WaitersForMobile> filter(Long id,String type) throws WaiterNotFoundException {
         WaitersEntity waiters = waitersRepository.findById(id).get();
         if(waiters==null){
             throw new WaiterNotFoundException("Пользователь не найден");
@@ -151,19 +151,57 @@ public class WaitersService {
         List<WaitersEntity> result=new ArrayList<>();
         List<WaitersForMobile> resultModel=new ArrayList<>();
         Long resultFilter;
-        for(WaitersEntity waitersEntity:waitersRepository.findAll()){
-            resultFilter=ratingRepository.filterAllRating(waitersEntity.getId());
-            if(resultFilter!=null){
-                waitersEntity.setRating(ratingRepository.filterAllRating(waitersEntity.getId()));
-            }else{
-                waitersEntity.setRating(0l);
+        Integer newResult;
+        if(type=="xp") {
+            for(WaitersEntity waitersEntity:waitersRepository.findAll()){
+                if(!waitersEntity.isActive()){
+                    continue;
+                }
+                resultFilter=ratingRepository.filterAllRating(waitersEntity.getId());
+                if(resultFilter!=null){
+                    waitersEntity.setRating(ratingRepository.filterAllRating(waitersEntity.getId()));
+                }else{
+                    waitersEntity.setRating(0l);
+                }
+                result.add(waitersEntity);
             }
-            result.add(waitersEntity);
+            for(WaitersEntity waitersEntity:result){
+                resultModel.add(WaitersForMobile.toModel(waitersEntity,waiters.getId()));
+            }
+            return resultModel.stream().sorted((h1, h2) -> h2.getScores().compareTo(h1.getScores())).collect(Collectors.toList());
         }
-        for(WaitersEntity waitersEntity:result){
-            resultModel.add(WaitersForMobile.toModel(waitersEntity,waiters.getId()));
+        if(type=="averagecheque"){
+            for(WaitersEntity waitersEntity:waitersRepository.findAll()){
+                if(!waitersEntity.isActive()){
+                    continue;
+                }
+                WaitersForMobile waitersForMobile=new WaitersForMobile();
+                newResult=ordersRepository.averageRevenue(waitersEntity.getId());
+                if(newResult==null) {
+                    newResult = 0;
+                }
+                waitersForMobile.setFirstName(waitersEntity.getFirstName());
+                waitersForMobile.setMiddleName(waitersEntity.getMiddleName());
+                waitersForMobile.setLastName(waitersEntity.getLastName());
+                waitersForMobile.setAverageCheque(newResult);
+                resultModel.add(waitersForMobile);
+            }
         }
-        return resultModel.stream().sorted((h1, h2) -> h2.getScores().compareTo(h1.getScores())).collect(Collectors.toList());
+        if(type=="golist"){
+            for(WaitersEntity waitersEntity:waitersRepository.findAll()){
+                if(!waitersEntity.isActive()){
+                    continue;
+                }
+                WaitersForMobile waitersForMobile=new WaitersForMobile();
+                newResult=dishOrderRepository.goListCount(waitersEntity.getId());
+                waitersForMobile.setFirstName(waitersEntity.getFirstName());
+                waitersForMobile.setMiddleName(waitersEntity.getMiddleName());
+                waitersForMobile.setLastName(waitersEntity.getLastName());
+                waitersForMobile.setAverageCheque(newResult);
+                resultModel.add(waitersForMobile);
+            }
+        }
+        return resultModel;
     }
 
     public Statistics statistics(Long id) throws WaiterNotFoundException {

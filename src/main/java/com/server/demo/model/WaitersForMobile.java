@@ -7,6 +7,8 @@ public class WaitersForMobile {
     private String lastName;
     private String middleName;
     private Integer scores;
+    private Integer averageCheque;
+    private Integer goList;
     private boolean isCurrentUser;
 
     public WaitersForMobile(){
@@ -25,6 +27,22 @@ public class WaitersForMobile {
             model.setCurrentUser(false);
         }
         return model;
+    }
+
+    public Integer getAverageCheque() {
+        return averageCheque;
+    }
+
+    public void setAverageCheque(Integer averageCheque) {
+        this.averageCheque = averageCheque;
+    }
+
+    public Integer getGoList() {
+        return goList;
+    }
+
+    public void setGoList(Integer goList) {
+        this.goList = goList;
     }
 
     public String getFirstName() {
